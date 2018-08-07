@@ -1,4 +1,4 @@
-# Created by https://www.gitignore.io/api/django
+#Created by https://www.gitignore.io/api/django
 
 ### Django ###
 *.log
@@ -10,7 +10,7 @@ db.sqlite3
 /media
 /static
 /venv
-/original_template
+original_template/
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
