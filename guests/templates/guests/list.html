@@ -1,0 +1,64 @@
+{% extends 'wedding/bones.html' %}
+
+{% block meat %}
+<h1>Guest List</h1>
+
+<table id="guest_list" class="display" style="width:100%">
+<thead>
+  <tr>
+  <th>Full Name</th>
+  <th>First Name</th>
+  <th>Last Name</th>
+  <th>Percentile</th>
+  <th>Likelihood</th>
+  <th>Family</th>
+  <th>Email</th>
+  <th>Phone</th>
+  <th>Lead Partner</th>
+  <th>Parent</th>
+  <th>Age</th>
+  <th>Username</th>
+  <th>Language</th>
+  <th>Country</th>
+  <th>State</th>
+  <th>City</th>
+  <th>Postal Code</th>
+  <th>Street Address</th>
+  <th>Apartment/Box</th>
+  <th>View</th>
+  <th>Edit</th>
+  <th>Delete</th>
+  </tr>
+</thead>
+<tbody>
+  {% for guest in guests %}
+  <tr>
+  <td>{{ guest.full_name }}</td>
+  <td>{{ guest.first_name }}</td>
+  <td>{{ guest.last_name }}</td>
+  <td>{{ guest.percentile }}</td>
+  <td>{{ guest.likelihood }}</td>
+  <td>{{ guest.family }}</td>
+  <td>{{ guest.email }}</td>
+  <td>{{ guest.phone }}</td>
+  <td>{{ guest.lead_partner }}</td>
+  <td>{{ guest.parent }}</td>
+  <td>{{ guest.age }}</td>
+  <td>{{ guest.username }}</td>
+  <td>{{ guest.language }}</td>
+  <td>{{ guest.country }}</td>
+  <td>{{ guest.administrative_area }}</td>
+  <td>{{ guest.locality }}</td>
+  <td>{{ guest.postal_code }}</td>
+  <td>{{ guest.thoroughfare }}</td>
+  <td>{{ guest.premise }}</td>
+  <td><a href="{% url 'guest_read' guest.id %}">View</a></td>
+  <td><a href="{% url 'guest_update' guest.id %}">Edit</a></td>
+  <td><a href="{% url 'guest_delete' guest.id %}">Delete</a></td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+
+<a href="{% url 'guest_create' %}">New</a>
+{% endblock %}

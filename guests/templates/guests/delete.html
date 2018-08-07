@@ -1,0 +1,11 @@
+{% extends 'wedding/bones.html' %}
+
+{% block meat %}
+<h1>Delete Guest</h1>
+
+<form method="post">
+  {% csrf_token %}
+  Are you sure you want to delete "{{ guest }}"?
+  <input type="submit" value="Submit" />
+</form>
+{% endblock %}
