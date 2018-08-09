@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django_countries',
     'phonenumber_field',
     'guests',
+    'profiles',
 ]
 
 MIDDLEWARE = [

@@ -3,6 +3,7 @@ from django.utils import timezone
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
+from profiles.models import Profile
 
 
 class Guest(models.Model):
@@ -49,6 +50,11 @@ class Guest(models.Model):
             (2, 'Groom'),
             (3, 'Friend'),
         ))
+    profile = models.ForeignKey(
+        Profile,
+        blank='True',
+        null='True',
+        on_delete=models.SET_NULL)
     language = models.CharField(
         default='en',
         max_length=2,
@@ -59,6 +65,7 @@ class Guest(models.Model):
         ))
     first_name = models.CharField(blank=True, max_length=40)
     last_name = models.CharField(blank=True, max_length=40)
+    kuwait_invite = models.BooleanField(default=False)
     country = CountryField(blank=True)
     administrative_area = models.CharField(
         'state',
