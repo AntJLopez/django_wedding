@@ -1,5 +1,8 @@
-{% extends 'wedding/bones.html' %} {% block meat %}
+{% extends 'wedding/base.html' %}
 {% load staticfiles %}
+
+{% block content %}
+
 
 <!-- START Navigation for mobile devices -->
 <nav class="top-bar show-for-large-down nav">
@@ -66,7 +69,11 @@
     </div><!-- END .nav-container .shadow -->
   </aside>
   <div class="large-9 columns" id="main">
-    <div id="section-0">
+    <!-- {% for section in sections %}
+      {{ section }}
+    {% endfor %} -->
+    {{ sections.0|safe }}
+    <!-- <div id="section-0">
       <header>
         <h2 class="section-title"><span>Tony</span> <em>and</em> <span>Haya</span></h2>
       </header>
@@ -82,8 +89,8 @@
             <span class="day-time">Five O’Clock in the evening</span> <span class="day-location accent">Sheraton Towers</span> <span class="day-address">123 Las Ramblas, Barcelona</span> <span class="day-meta">dinner + dancing to follow</span>
           </div>
         </div>
-      </div><!-- END .row -->
-    </div><!-- END #section-0 -->
+      </div>
+    </div> -->
     <div class="callout">
       <a class="button radius js-scroll" href="#section-6"><i class="fa fa-envelope"></i> <span class="btn-label">Click here to RSVP today</span></a>
     </div><!-- END .callout -->
@@ -208,17 +215,17 @@
             <a href="#" class="block-logo">
 			  <img src="{% static "img/logo-2.png" %}" alt="Logo" />
 			</a>
-		  </li>					  
+		  </li>
 		  <li>
 		    <a href="#" class="block-logo">
 			  <img src="{% static "img/logo-3.png" %}" alt="Logo" />
 			</a>
-		  </li>					  
+		  </li>
 		  <li>
 		    <a href="#" class="block-logo">
 			  <img src="{% static "img/logo-4.png" %}" alt="Logo" />
 			</a>
-		  </li>					
+		  </li>
 		</ul>
         <p class="content-block">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui</p><!-- END .content-block -->
       </div>

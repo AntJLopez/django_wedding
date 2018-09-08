@@ -1,5 +1,6 @@
 import os
-from .local_settings import DATABASES, SECRET_KEY, ALLOWED_HOSTS, DEBUG
+from .local_settings import (  # noqa
+    DATABASES, SECRET_KEY, ALLOWED_HOSTS, DEBUG)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -15,8 +16,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_countries',
     'phonenumber_field',
-    'guests',
-    'profiles',
+    'guests.apps.GuestsConfig',
+    'profiles.apps.ProfilesConfig',
+    'sections.apps.SectionsConfig',
 ]
 
 MIDDLEWARE = [
@@ -55,16 +57,20 @@ WSGI_APPLICATION = 'wedding.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'NumericPasswordValidator',
     },
 ]
 
