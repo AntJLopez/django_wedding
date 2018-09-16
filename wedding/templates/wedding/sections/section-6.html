@@ -1,0 +1,76 @@
+<div class="js-form" id="section-6">
+  <div class="section-title-container">
+    <h2 class="section-title">Rsvp</h2><span class="hearts"></span>
+  </div>
+  <div class="small-12 large-10 large-centered columns">
+    <form action="#" class="rsvp-form custom" data-abide="" id="js-form" method="post" name="js-form">
+      <fieldset class="rsvp-details">
+        <!-- Displays a global alert if required fields are missing -->
+        <div class="js-display"></div><legend>Kindly respond by <strong>March 14, 2014</strong>. We look forward to celebrating with you!</legend>
+        <div class="row">
+          <div class="large-6 columns">
+            <label for="firstname">First Name</label> <input class="input-field" id="firstname" name="firstname" placeholder="Your first name is required" required="" type="text" value=""> <small class="error">First Name is required.</small>
+          </div>
+          <div class="large-6 columns">
+            <label for="lastname">Last Name</label> <input class="input-field" id="lastname" name="lastname" placeholder="Your last name is required" required="" type="text" value=""> <small class="error">Last Name is required.</small>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-6 columns">
+            <label for="email">Email</label> <input class="input-field" id="email" name="email" placeholder="name@yourdomain.com" required="" type="email" value=""> <small class="error">Valid Email is required.</small>
+          </div>
+          <div class="large-6 columns">
+            <label for="phone">Phone</label> <input class="input-field" id="phone" name="phone" placeholder="A phone number is optional" type="tel" value="">
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="rsvp-attendance">
+        <legend>Will you be attending?</legend>
+        <div class="large-6 columns">
+          <label for="radio1"><input id="radio1" name="radio" required="" style="display:none;" type="radio" value="Accepts with Pleasure!"> <span class="custom radio accept"></span> <span class="radio-label">Accepts with Pleasure!</span></label>
+        </div>
+        <div class="large-6 columns">
+          <label for="radio2"><input id="radio2" name="radio" required="" style="display:none;" type="radio" value="Declines with Regret."> <span class="custom radio decline"></span> <span class="radio-label">Declines with Regret.</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="rsvp-meal-choice">
+        <legend>Please select your meal choices</legend>
+        <div class="row">
+          <div class="large-6 columns">
+            <label for="main-course">Main</label> <select id="main-course" name="main-course">
+              <option selected>
+                None
+              </option>
+              <option>
+                Chicken
+              </option>
+              <option>
+                Beef
+              </option>
+              <option>
+                Vegetarian
+              </option>
+            </select>
+          </div>
+          <div class="large-6 columns">
+            <label for="dessert">Dessert</label> <select id="dessert" name="dessert">
+              <option selected>
+                None
+              </option>
+              <option>
+                Chocolate Cake
+              </option>
+              <option>
+                Lemon Cheesecake
+              </option>
+              <option>
+                Key Lime Pie
+              </option>
+            </select>
+          </div>
+        </div>
+      </fieldset><button class="button radius" id="js-submit-btn" type="submit"><i class="fa fa-envelope"></i> <span class="btn-label">Send</span></button>
+    </form>
+    <p>For any questions please email us: <a href="mailto:info@yourdomain.com" title="E-mail Us">info@yourdomain.com</a></p>
+  </div><!-- END .large-8 -->
+</div><!-- END .row -->

@@ -10,6 +10,7 @@ def guest_list(request, template_name='guests/list.html'):
     data = {'guests': guests}
     return render(request, template_name, data)
 
+
 @login_required
 def guest_create(request, template_name='guests/form.html'):
     form = GuestForm(request.POST or None)
@@ -19,11 +20,13 @@ def guest_create(request, template_name='guests/form.html'):
     data = {'form': form}
     return render(request, template_name, data)
 
+
 @login_required
 def guest_read(request, pk, template_name='guests/read.html'):
     guest = get_object_or_404(Guest, pk=pk)
     data = {'guest': guest}
     return render(request, template_name, data)
+
 
 @login_required
 def guest_update(request, pk, template_name='guests/form.html'):
@@ -34,6 +37,7 @@ def guest_update(request, pk, template_name='guests/form.html'):
         return redirect('guest_list')
     data = {'form': form}
     return render(request, template_name, data)
+
 
 @login_required
 def guest_delete(request, pk, template_name='guests/delete.html'):
