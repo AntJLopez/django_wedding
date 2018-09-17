@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date
@@ -19,7 +18,7 @@ class Guest(models.Model):
             return ''
 
     full_name = models.CharField(max_length=75)
-    username = models.SlugField(blank=True, unique=True)
+    username = models.SlugField(blank=True, null=True, unique=True)
     phone = PhoneNumberField(blank=True)
     email = models.EmailField(blank=True, max_length=200)
     lead_partner = models.ForeignKey(
