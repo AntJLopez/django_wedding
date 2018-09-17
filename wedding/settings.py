@@ -8,17 +8,23 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Application definition
 INSTALLED_APPS = [
+    # Local Apps
+    'guests.apps.GuestsConfig',
+    'profiles.apps.ProfilesConfig',
+    'sections.apps.SectionsConfig',
+
+    # Third Party Apps
+    'django_countries',
+    'phonenumber_field',
+    'django_extensions',
+
+    # Django Apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_countries',
-    'phonenumber_field',
-    'guests.apps.GuestsConfig',
-    'profiles.apps.ProfilesConfig',
-    'sections.apps.SectionsConfig',
 ]
 
 MIDDLEWARE = [
