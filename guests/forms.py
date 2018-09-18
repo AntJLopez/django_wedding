@@ -6,7 +6,6 @@ class GuestForm(ModelForm):
     class Meta:
         model = Guest
         fields = [
-            'full_name',
             'first_name',
             'last_name',
             'percentile',

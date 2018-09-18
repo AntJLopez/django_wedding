@@ -17,7 +17,6 @@ class Guest(models.Model):
         else:
             return ''
 
-    full_name = models.CharField(blank=True, max_length=75)
     username = models.SlugField(blank=True, null=True)
     phone = PhoneNumberField(blank=True)
     email = models.EmailField(blank=True, max_length=200)
@@ -30,7 +29,7 @@ class Guest(models.Model):
     parent = models.ForeignKey(
         'self',
         blank=True,
-        related_name='child',
+        related_name='children',
         null=True,
         on_delete=models.SET_NULL)
     birthday = models.DateField(blank=True, null=True)
