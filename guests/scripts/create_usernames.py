@@ -5,6 +5,7 @@ from django.db.utils import IntegrityError
 
 def run(*args):
     for guest in Guest.objects.all():
+        print(f'{guest.first_name} : {guest.last_name}')
         if (guest.username and len(guest.username) == 10 and
                 guest.username.isupper()):
             guest.username = None
@@ -14,13 +15,14 @@ def run(*args):
             unum = 0
             trying = True
             while(trying):
+                print(unum)
                 try:
                     guest.username = guest.first_name.lower()
                     if unum > 0:
                         guest.username += str(unum)
-                    trying = False
                     guest.save()
-                except IntegrityError:
+                    trying = False
+                except (IntegrityError):
                     unum += 1
         if guest.username:
             guest.username = slugify(guest.username)
