@@ -17,7 +17,7 @@ def home(request):
     try:
         guest = Guest.objects.get(id=request.session['guest'])
         params['guest'] = guest
-    except KeyError:
+    except (KeyError, ValueError):
         pass
     return render(request, 'wedding/home.html', params)
 

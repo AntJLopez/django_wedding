@@ -2,6 +2,7 @@
 
 <html class="no-js" lang="en" >
 {% load staticfiles %}
+{% load sass_tags %}
 
 <head>
   <meta charset="utf-8" />
@@ -15,7 +16,8 @@
   <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}" />
   <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}" />
   <link rel="stylesheet" href="{% static 'css/flexslider.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}" /> -->
+  <link href="{% sass_src 'css/style.scss' %}" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="{% static 'css/media-queries.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'js/DataTables/datatables.min.css' %}"/>
 
