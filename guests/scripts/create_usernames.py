@@ -18,7 +18,7 @@ def run(*args):
                 guest.username = None
         if (all(not v for v in [
                 guest.username, guest.lead_partner, guest.parent]) and
-                guest.percentile >= .4):
+                guest.percentile >= 0.4):
             # Guest needs a username and has none
             unum = 0
             trying = True

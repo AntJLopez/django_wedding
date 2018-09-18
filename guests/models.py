@@ -17,8 +17,8 @@ class Guest(models.Model):
         else:
             return ''
 
-    full_name = models.CharField(max_length=75)
-    username = models.SlugField(blank=True, null=True, unique=True)
+    full_name = models.CharField(blank=True, max_length=75)
+    username = models.SlugField(blank=True)
     phone = PhoneNumberField(blank=True)
     email = models.EmailField(blank=True, max_length=200)
     lead_partner = models.ForeignKey(
