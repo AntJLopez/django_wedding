@@ -6,16 +6,23 @@ from django.db.utils import IntegrityError
 def run(*args):
     for guest in Guest.objects.all():
         print(f'{guest.first_name} : {guest.last_name}')
-        if (guest.username and len(guest.username) == 10 and
-                guest.username.isupper()):
-            guest.username = None
-        if all(not v for v in [
-                guest.username, guest.lead_partner, guest.parent]):
+        if guest.username:
+            make_null = False
+            if len(guest.username) == 10 and guest.username.isupper():
+                make_null = True
+            if guest.percentile < 0.4:
+                make_null = True
+            if guest.lead_partner or guest.parent:
+                make_null = True
+            if make_null:
+                guest.username = None
+        if (all(not v for v in [
+                guest.username, guest.lead_partner, guest.parent]) and
+                guest.percentile >= .4):
             # Guest needs a username and has none
             unum = 0
             trying = True
             while(trying):
-                print(unum)
                 try:
                     guest.username = guest.first_name.lower()
                     if unum > 0:
