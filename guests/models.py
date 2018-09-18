@@ -7,7 +7,7 @@ from profiles.models import Profile
 
 class Guest(models.Model):
     def __str__(self):
-        return self.full_name
+        return f'{self.first_name} {self.last_name}'
 
     def age(self):
         if self.birthday:
