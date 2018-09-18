@@ -19,6 +19,7 @@ def run(*args):
                     if unum > 0:
                         guest.username += str(unum)
                     trying = False
+                    guest.save()
                 except IntegrityError:
                     unum += 1
         if guest.username:
