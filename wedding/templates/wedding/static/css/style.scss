@@ -1,12 +1,60 @@
+/*-----------------------------------------------------------------------------------*/
+/*	Colors
+/*-----------------------------------------------------------------------------------*/
+
+$orangeish: #f78764;
+$light_orangeish: #f9a78e;
+$dark_orangeish: #cb6f52;
+$goldish: #b29a45;
+$light_goldish: #dec056;
+$dark_goldish: #867434;
+
+$background_a: #eaeaf2;
+$background_b: #d5d5e5;
+$gold: #f4d35e;
+$dark_gold: #c8ad4d;
+
+$gold_a: rgba(244, 211, 94, 0.9);
+$light_gold_a: rgba(244, 215, 108, 0.9);
+$light_midnight: rgba(45, 45, 125, 0.9);
+$lighter_midnight: rgba(66, 66, 138, 0.9);
+$even_lighter_midnight: rgba(87, 87, 151, 0.9);
+
+$background_color: $background_a;
+$odd_section_color: $background_b;
+$header_color: midnightblue;
+$title_subtext_color: $goldish;
+$title_underline_color: $light_goldish;
+$date_accent_color: $dark_goldish;
+$body_color: #838383;    // Only used once; for body text
+$hover_color: $dark_gold;   // Hover text for buttons and links
+$overlay_background_color: rgba(108, 108, 164, 0.7);  // When hovering over thumbnails
+
+$logo_color: $light_midnight;
+$side_nav_background: $lighter_midnight;
+$side_nav_select_color: #f7df89;
+$side_nav_border_top_color: $light_midnight;
+$small_nav_background_color: #111111;
+$small_nav_border_color: #222222;
+
+$form_element_color: #e6e6e6;
+$text_field_background_color: #F5F5F6;
+$text_field_color: #818b92;
+$error_color: #c60f13;
+$text_area_error_color: rgba(198, 15, 19, 0.1);
+$text_error_background_color: #fafafa;
+$text_error_border_color: #999999;
+
+$vertical_divider_color: #d9d9d9;  // Color of divider lines in columns
+$border_bottom_color: #e4e4e4;
+
+
+$message_background_color: #ffffe0;
+$message_border_color: #e6db55;
+
+$box_shadow_color: #6e6e6e;  // No idea what this does
+
 /*------------------------------------------------------------------------------------
-
-	Theme Name: Eternity
-	Theme URI: http://demo.themechills.com/eternity
-	Description: A beautiful landing page template for all wedding occasions.
-	Author: ThemeChills
-	Author URI: http://www.themechills.com
-
---------------------------------------------------------------------------------------
 
 	1.	Overrides
 	2.	Main Content Styles
@@ -35,18 +83,19 @@
 /*-----------------------------------------------------------------------------------*/
 
 body {
-	color:#838383;
+	background-color: $background_color;
+	color: $body_color;
 	font-family:'Roboto Slab', serif;
 	text-align: center;
 }
 a {
-	color:#de675f;
+	color:$header_color;
 	-webkit-transition: all 300ms ease-out;
 	-moz-transition: all 300ms ease-out;
 	transition: all 300ms ease-out;
 }
 a:hover {
-	color:#ec6d65;
+	color:$hover_color;
 }
 img {
 	width: 100%;
@@ -60,8 +109,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {	
-	color:#de675f;
+h6 {
+	color: $header_color;
 	font-family: 'ostrich_sansbold','Helvetica Neue', Helvetica, sans-serif;
 	font-weight: normal;
 	line-height: 1.5;
@@ -85,7 +134,7 @@ header {
 }
 blockquote {
 	border-left: none;
-	padding: 4em 2em;	
+	padding: 4em 2em;
 	margin-bottom: 0;
 	text-align: left;
 }
@@ -96,7 +145,7 @@ blockquote:before {
 	top: 0;
 	right: 0;
 	width: 1px;
-	background:#d9d9d9;
+	background: $vertical_divider_color;
 }
 blockquote.caption-2:before {
 	background:none
@@ -104,12 +153,12 @@ blockquote.caption-2:before {
 .subline {
 	padding: 1em 0.5em 0;
 }
-.section-title-container {	
+.section-title-container {
 	text-align: center;
 	margin: 6em 0 2em;
 }
-.section-title {	
-	border-bottom: 4px double #c9b29b;
+.section-title {
+	border-bottom: 4px double $title_underline_color;
 	display: inline-block;
 	text-align: center;
 	font-size: 4em;
@@ -118,12 +167,12 @@ blockquote.caption-2:before {
 	width: 100%;
 }
 .section-title em {
-	color:#987c61;
+	color: $title_subtext_color;
 	font-family: 'Playfair Display', serif;
 	font-size: 0.5em;
 }
 .hearts {
-	background:url(../img/icon-hearts.png) no-repeat center bottom;	
+	background:url(../img/icon-hearts.png) no-repeat center bottom;
 	display: block;
 	height: 2em;
 	position: relative;
@@ -131,64 +180,65 @@ blockquote.caption-2:before {
 	bottom: 20px;
 }
 .divider {
-	border-bottom:1px solid #e4e4e4;
+	border-bottom:1px solid $border_bottom_color;
 }
 
 /*==== Date Block ====*/
 
 .date-container {
 	padding: 1.5em;
-}
-.date-container.col-1 {
-	border-bottom:1px solid #e4e4e4;
-}
-.date-container .day-date,
-.date-container .day-time,
-.date-container .day-address {
-	font-size: 1em;
-}
-.date-container span {
-	display:block;
-}
-.date-container .date {
-	font-family: 'Roboto Slab', serif;
-}
-.date-container .accent {
-	color:#755f49;
-	font-family: 'ostrich_sansbold','Helvetica Neue', Helvetica, sans-serif;
-	font-weight: normal;
-}
-.date-container .day-location {
-	font-size: 3.750em;
-	margin: 10px 0 5px;
-}
-.date-container .day-year {
-	font-size: 12em;
+
+	.col-1 {
+		border-bottom:1px solid $border_bottom_color;
+	}
+	.day-date, .day-time, .day-address {
+		font-size: 1em;
+	}
+	span {
+		display:block;
+	}
+	.date {
+		font-family: 'Roboto Slab', serif;
+	}
+	.accent {
+		color:$date_accent_color;
+		font-family: 'ostrich_sansbold','Helvetica Neue', Helvetica, sans-serif;
+		font-weight: normal;
+	}
+	.day-location {
+		font-size: 3.75em;
+		margin: 10px 0 5px;
+		text-align: center;
+	}
+	.day-year {
+		font-size: 12em;
+	}
+	.day-meta {
+		font-family: 'Playfair Display', serif;
+		font-style: italic;
+		text-transform: lowercase;
+		font-weight: normal;
+		font-size: 1.45em;
+		margin-top: 15px;
+	}
+
 }
 .date-container, .subline, .side-nav {
-	color: #987c61;
+	color: $title_subtext_color;
 	font-family: 'Roboto Slab', serif;
-	font-weight:bold;	
-	text-transform: uppercase;	
+	font-weight:bold;
+	text-transform: uppercase;
 }
-.date-container .day-meta {
-	font-family: 'Playfair Display', serif;
-	font-style: italic;
-	text-transform: lowercase;
-	font-weight: normal;
-	font-size: 1.45em;
-	margin-top: 15px;
-}
-
 /*==== Callout ====*/
 
 .callout {
 	clear:both;
 	text-align: center;
 	margin: 4em 0 6em;
-}
-.callout .button {
-	margin-bottom: 0;
+
+	.button {
+		margin-bottom: 0;
+	}
 }
 
 /*==== Sections ====*/
@@ -198,7 +248,7 @@ div[id*="section-"] {
 	text-align: center;
 }
 .section-odd {
-	background:#f7f7f7;
+	background:$odd_section_color;
 }
 .btn-label {
 	margin-left: 0.5em;
@@ -210,17 +260,17 @@ div[id*="section-"] {
 	margin-bottom: 0.88em;
 }
 .block-grid .block-logo {
-	background-color: #FFF;
+	background-color: $side_nav_select_color;
 	border-radius: 10px;
 	display: table-cell;
 	height: 10em;
 	text-align: center;
 	padding: 4em;
 	vertical-align: middle;
-	width: 50%;	
+	width: 50%;
 }
 .block-logo:hover {
-	background-color: #FFF;
+	background-color: $side_nav_select_color;
 	cursor: pointer;
 }
 .block-logo img {
@@ -262,41 +312,41 @@ aside .postfix.button {
 	padding:1.43em 0;
 }
 .side-nav {
-	background-color:#ec6d65; /* fallback */
-	background: rgba(236, 109, 101, 0.9); 
+	background-color: $hover_color; /* fallback */
+	background: $side_nav_background;
 	margin: 0;
 	padding:0;
 }
-.side-nav li { 
+.side-nav li {
 	margin:0;
 }
 .side-nav li a {
-	color:#fff;
-	border-top: 1px solid #fb918a;
+	color:$side_nav_select_color;
+	border-top: 1px solid $side_nav_border_top_color;
 	display: block;
 	padding: 1.25em;
 }
 .side-nav li.active a,
-.side-nav li a:hover {	
-	background-color:#fff;
-	color:#de675f;
+.side-nav li a:hover {
+	background-color:$side_nav_select_color;
+	color:$header_color;
 }
 .side-nav-container {
 	margin: 0 auto;
 	width: 59%;
 }
-.shadow {	
-	-webkit-box-shadow: 0 0 1.5em #6e6e6e;
-	   -moz-box-shadow: 0 0 1.5em #6e6e6e;
-			box-shadow: 0 0 1.5em #6e6e6e;
+.shadow {
+	-webkit-box-shadow: 0 0 1.5em $box_shadow_color;
+	   -moz-box-shadow: 0 0 1.5em $box_shadow_color;
+			box-shadow: 0 0 1.5em $box_shadow_color;
 }
-.logo {		
+.logo {
 	margin:5em auto;
 }
 .logo a {
-	background-color: #de675f; /* fallback */
-	background-color: rgba( 222, 103, 95, 0.9);
-	color:#fff;
+	background-color: $header_color; /* fallback */
+	background-color: $logo_color;
+	color:$side_nav_select_color;
 	display: block;
 	font-size: 2.5em;
 	letter-spacing: -12px;
@@ -312,18 +362,18 @@ aside .postfix.button {
 /* Global Buttons */
 
 button, .button {
-	background-color: #de675f;
+	background-color: $header_color;
 	border-color: transparent;
 	-webkit-box-shadow: none;
 		    box-shadow: none;
 	text-transform: uppercase;
 	padding: 1.250em 1.5em;
 }
-button:hover, 
-button:focus, 
-.button:hover, 
+button:hover,
+button:focus,
+.button:hover,
 .button:focus {
-	background-color:#ec6d65;
+	background-color:$hover_color;
 }
 
 /* High Quality/Definition Images */
@@ -350,11 +400,11 @@ input[type="tel"],
 input[type="time"],
 input[type="url"],
 textarea {
-	background-color: #F5F5F6;
-	border: 1px solid #F5F5F6;
-	border-radius: 3px; 
+	background-color: $text_field_background_color;
+	border: 1px solid $text_field_background_color;
+	border-radius: 3px;
 	height: 38px;
-	color: #818b92;
+	color: $text_field_color;
 	-webkit-font-smoothing: antialiased;
 	-webkit-appearance: none;
 	-webkit-box-shadow: none;
@@ -363,26 +413,26 @@ textarea {
 	   -moz-transition: .25s ease-in;
 		    transition: .25s ease-in;
 }
-input[type="text"]:focus, 
-input[type="password"]:focus, 
-input[type="date"]:focus, 
-input[type="datetime"]:focus, 
-input[type="datetime-local"]:focus, 
-input[type="month"]:focus, 
-input[type="week"]:focus, 
-input[type="email"]:focus, 
-input[type="number"]:focus, 
-input[type="search"]:focus, 
-input[type="tel"]:focus, 
-input[type="time"]:focus, 
-input[type="url"]:focus, 
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="time"]:focus,
+input[type="url"]:focus,
 textarea:focus {
-	background-color: #FFF;
-	border:1px solid #de675f;
+	background-color: $side_nav_select_color;
+	border:1px solid $header_color;
 	-webkit-box-shadow: none;
 	   -moz-box-shadow: none;
 		    box-shadow: none;
-} 
+}
 
 label {
 	text-align: left;
@@ -395,11 +445,12 @@ label {
 	margin:2em 0 4em;
 }
 .rsvp-form fieldset {
-	border-color:#e6e6e6;
+	border-color:$form_element_color;
 	padding: 2em 0.5em;
 	margin: 1em 1em 3em;
 }
 .rsvp-form legend {
+	background: $background_a;
 	font-weight: normal;
 	padding: 0 1em;
 	line-height: 1.4;
@@ -418,14 +469,14 @@ label {
 }
 
 form.custom .radio {
-	border: solid 5px #e6e6e6;
+	border: solid 5px $form_element_color;
 	height: 29px;
 	width: 30px;
 }
 form.custom .custom.radio.checked:before {
 	top: 4px;
 	left: 5px;
-	background-color: #e6e6e6;
+	background-color: $form_element_color;
 	width: 10px;
 	height: 10px;
 }
@@ -435,8 +486,8 @@ form.custom .dropdown {
 
 /*==== Error Handling ====*/
 
-[data-abide] .error small.error, 
-[data-abide] span.error, 
+[data-abide] .error small.error,
+[data-abide] span.error,
 [data-abide] small.error {
 	display: block;
 	padding: 0.875em 0.25em;
@@ -444,12 +495,12 @@ form.custom .dropdown {
 	margin-bottom: 1em;
 	font-size: 0.75em;
 	font-weight: normal;
-	background: #c60f13;
-	color: white; 
+	background: $error_color;
+	color: white;
 }
-[data-abide] span.error, 
+[data-abide] span.error,
 [data-abide] small.error {
-	display: none; 
+	display: none;
 }
 span.error, small.error {
 	display: block;
@@ -458,25 +509,25 @@ span.error, small.error {
 	margin-bottom: 1em;
 	font-size: 0.75em;
 	font-weight: bold;
-	background: #c60f13;
-	color: white; 
+	background: $error_color;
+	color: white;
 }
 .error input,
 .error textarea,
 .error select {
-	border-color: #c60f13;
-	background-color: rgba(198, 15, 19, 0.1);
-	margin-bottom: 0; 
+	border-color: $error_color;
+	background-color: $text_area_error_color;
+	margin-bottom: 0;
 }
 .error input:focus,
 .error textarea:focus,
 .error select:focus {
-  	background: #fafafa;
-  	border-color: #999999; 
+  	background: $text_error_background_color;
+  	border-color: $text_error_border_color;
 }
 .error label,
 .error label.error {
-  	color: #c60f13; 
+  	color: $error_color;
 }
 .error > small,
 .error small.error {
@@ -486,40 +537,40 @@ span.error, small.error {
 	margin-bottom: 1em;
 	font-size: 0.75em;
 	font-weight: bold;
-	background: #c60f13;
-	color: white; 
+	background: $error_color;
+	color: white;
 }
 .error span.error-message {
-	display: block; 
+	display: block;
 }
 input.error,
 textarea.error {
-	border-color: #c60f13;
-	background-color: rgba(198, 15, 19, 0.1);
-	margin-bottom: 0; 
+	border-color: $error_color;
+	background-color: $text_area_error_color;
+	margin-bottom: 0;
 }
 input.error:focus,
 textarea.error:focus {
-	background: #fafafa;
-	border-color: #999999; 
+	background: $text_error_background_color;
+	border-color: $text_error_border_color;
 }
 .error select {
-  	border-color: #c60f13;
-  	background-color: rgba(198, 15, 19, 0.1); 
+  	border-color: $error_color;
+  	background-color: $text_area_error_color;
 }
 .error select:focus {
-	background: #fafafa;
-	border-color: #999999; 
+	background: $text_error_background_color;
+	border-color: $text_error_border_color;
 }
 label.error {
-	color: #c60f13; 
+	color: $error_color;
 }
 
 /*==== Notification Panel ====*/
 
 .message-panel {
-	background-color: #ffffe0;
-	border-color: #e6db55;
+	background-color: $message_background_color;
+	border-color: $message_border_color;
 	padding: 1em;
 	font-size: 0.850em;
 	margin: 0 0 2em;
@@ -541,14 +592,14 @@ label.error {
 	height: auto;
 }
 .overlay-label {
-	background-color: rgba( 222, 103, 95, 0.7);
+	background-color: $overlay_background_color;
 	display: inline;
 	left: 0px;
 	text-transform: uppercase;
 	font-weight: 300;
 	letter-spacing: 3px;
 	opacity: 0;
-	margin: 0px;	
+	margin: 0px;
 	position: absolute;
 	top: 0px;
 	width: 100%;
@@ -576,17 +627,17 @@ label.error {
 	text-align: left;
 }
 .top-bar .name {
-	color:#fff;
+	color:$side_nav_select_color;
 	font-weight: bold;
 	line-height: 3em;
 	padding-left: 1em;
 	margin-right: 1em;
 }
 .top-bar-section ul li {
-	border-bottom: 1px dotted #222222;
+	border-bottom: 1px dotted $small_nav_border_color;
 }
 .top-bar-section ul li > a {
-	background: #111111;
+	background: $small_nav_background_color;
 	font-weight: normal;
 }
 .top-bar-section ul li:first-child {
@@ -598,7 +649,7 @@ label.error {
 /*-----------------------------------------------------------------------------------*/
 
 footer {
-	overflow: hidden;	
+	overflow: hidden;
 	text-transform: uppercase;
 	text-align: center;
 	padding: 2em;
@@ -624,6 +675,6 @@ footer a {
 	margin: 3em 0 2em;
 }
 .preloader {
-	background:url(../img/status.gif) no-repeat center center; 
+	background:url(../img/status.gif) no-repeat center center;
 	min-height:400px;
 }
