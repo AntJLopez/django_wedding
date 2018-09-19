@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'django_extensions',
     'sass_processor',
+    'mathfilters',
 
     # Django Apps
     'django.contrib.admin',

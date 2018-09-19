@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404  # noqa
 from django.contrib.auth.decorators import login_required  # noqa
 from .local_settings import GOOGLE_API_KEY
-from sections import views
 from guests.models import Guest
 
 
 def home(request):
     sections = []
-    sections.append(views.header(request))
-    print(views.header)
+    sections.append({
+        'template': 'wedding/sections/header.html'})
+    sections.append({
+        'title': 'Wedding Party',
+        'template': 'wedding/sections/wedding_party.html'
+    })
 
     params = {
         'sections': sections,

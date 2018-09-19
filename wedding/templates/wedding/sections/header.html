@@ -1,29 +1,41 @@
+{% extends 'wedding/sections/section.html' %}
 {% load staticfiles %}
 
-<div id="section-0">
-  <header>
-    <h2 class="section-title"><span>Tony</span> <em>and</em> <span>Haya</span></h2>
-  </header>
-  <p class="subline">
-    Invite You to Celebrate At their Wedding
-  </p>
-  <img alt="Placeholder" class="hero-unit fade-in" src="{% static 'img/hero-unit.jpg' %}">
-  <div class="row divider date-section">
-    <div class="large-6 small-12 columns">
-      <div class="date-container col-1">
-        <span class="day-date">Saturday, December 15</span> <span class="day-year accent">2018</span>
-      </div>
+{% block content %}
+<header>
+  <h2 class="section-title">
+    <span>Tony</span>&nbsp;<em>and</em>&nbsp;<span>Haya</span>
+  </h2>
+</header>
+<p class="subline">
+  {% if guest %}
+    Invite You to Celebrate at Their Wedding
+  {% else %}
+    Are getting married!
+  {% endif %}
+</p>
+<img alt="Placeholder" class="hero-unit fade-in" src="{% static 'img/hero-unit.jpg' %}">
+
+<div class="row divider date-section">
+  <div class="large-6 small-12 columns">
+    <div class="date-container col-1">
+      <span class="day-date">Saturday, December 15</span> <span class="day-year accent">2018</span>
     </div>
-    <div class="large-6 small-12 columns">
-      <div class="date-container col-2">
-        <span class="day-time">Three O’Clock in the Afternoon</span>
-        <span class="day-location accent">Berkshire Outdoor Center</span>
-        <span class="day-address">591 Hamilton Rd Becket, MA</span>
-        <span class="day-meta">dinner & revelries to follow</span>
-      </div>
+  </div>
+  <div class="large-6 small-12 columns">
+    <div class="date-container col-2">
+      <span class="day-time">Three O’Clock in the Afternoon</span>
+      <span class="day-location accent">Berkshire Outdoor Center</span>
+      <span class="day-address">591 Hamilton Rd Becket, MA</span>
+      <span class="day-meta">dinner & revelries to follow</span>
     </div>
   </div>
 </div>
+
 <div class="callout">
-  <a class="button radius js-scroll" href="#section-6"><i class="fa fa-envelope"></i> <span class="btn-label">Click here to RSVP today</span></a>
+  <a class="button radius js-scroll" href="#">
+    <i class="fa fa-envelope"></i>
+    <span class="btn-label">Click here to RSVP today</span>
+  </a>
 </div>
+{% endblock %}

@@ -8,21 +8,9 @@
 <div class="row collapse">
   {% include "wedding/sections/navigation.html" %}
   <div class="large-9 columns" id="main">
-    {% include "wedding/sections/header.html" %}
-
-    {% include "wedding/sections/section-1.html" %}
-
-    {% include "wedding/sections/section-2.html" %}
-
-    {% include "wedding/sections/section-3.html" %}
-
-    {% include "wedding/sections/section-4.html" %}
-
-    {% include "wedding/sections/section-5.html" %}
-
-    {% include "wedding/sections/section-6.html" %}
-
-    {% include "wedding/sections/map.html" %}
+    {% for section in sections %}
+      {% include section.template %}
+    {% endfor %}
 
     {% include "wedding/sections/footer.html" %}
   </div>

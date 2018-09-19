@@ -75,8 +75,18 @@ $box_shadow_color: #6e6e6e;  // No idea what this does
          url('../fonts/ostrich-bold-webfont.svg#ostrich_sansbold') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
+@font-face {
+  font-family: 'hangar_nine';
+  src: url('../fonts/hangar-nine.otf') format('opentype');
+}
+@font-face {
+  font-family: 'standing_room_only';
+  src: url('../fonts/standing-room-only.ttf') format('truetype');
+}
+
+$title_font: 'hangar_nine';
+$emphasis_font: 'hangar_nine';
 
 /*-----------------------------------------------------------------------------------*/
 /*	1.	Overrides
@@ -111,7 +121,7 @@ h4,
 h5,
 h6 {
 	color: $header_color;
-	font-family: 'ostrich_sansbold','Helvetica Neue', Helvetica, sans-serif;
+	font-family: $title_font,'Helvetica Neue', Helvetica, sans-serif;
 	font-weight: normal;
 	line-height: 1.5;
 }
@@ -168,11 +178,27 @@ blockquote.caption-2:before {
 }
 .section-title em {
 	color: $title_subtext_color;
-	font-family: 'Playfair Display', serif;
+	font-family: $emphasis_font, serif;
 	font-size: 0.5em;
 }
 .hearts {
 	background:url(../img/icon-hearts.png) no-repeat center bottom;
+	display: block;
+	height: 2em;
+	position: relative;
+	z-index: 4;
+	bottom: 20px;
+}
+.tickets {
+	background:url(../img/icon-tickets.png) no-repeat center bottom;
+	display: block;
+	height: 2em;
+	position: relative;
+	z-index: 4;
+	bottom: 20px;
+}
+.theatre {
+	background:url(../img/icon-theatre.png) no-repeat center bottom;
 	display: block;
 	height: 2em;
 	position: relative;
@@ -202,7 +228,7 @@ blockquote.caption-2:before {
 	}
 	.accent {
 		color:$date_accent_color;
-		font-family: 'ostrich_sansbold','Helvetica Neue', Helvetica, sans-serif;
+		font-family: $title_font,'Helvetica Neue', Helvetica, sans-serif;
 		font-weight: normal;
 	}
 	.day-location {
@@ -214,7 +240,7 @@ blockquote.caption-2:before {
 		font-size: 12em;
 	}
 	.day-meta {
-		font-family: 'Playfair Display', serif;
+		font-family: $emphasis_font, serif;
 		font-style: italic;
 		text-transform: lowercase;
 		font-weight: normal;
@@ -342,15 +368,20 @@ aside .postfix.button {
 }
 .logo {
 	margin:5em auto;
-}
-.logo a {
-	background-color: $header_color; /* fallback */
-	background-color: $logo_color;
-	color:$side_nav_select_color;
-	display: block;
-	font-size: 2.5em;
-	letter-spacing: -12px;
-	border-radius: 30px;
+  a {
+  	background-color: $header_color; /* fallback */
+  	background-color: $logo_color;
+  	color:$side_nav_select_color;
+  	display: block;
+  	font-size: 2.5em;
+  	letter-spacing: -12px;
+  	border-radius: 30px;
+    .named-guest {
+      font-size: 0.5em;
+      letter-spacing: 0.05em;
+      line-height: 1em;
+    }
+  }
 }
 .ribbon {
 	background:none;
