@@ -1,4 +1,6 @@
-<footer class="section-odd">
+{% load mathfilters %}
+
+<footer class="{% if sections|length|mod:2 == 1 %}section-odd{% endif %}">
   <p class="copyright small-12 large-6 columns">
     Tony spent a lot of time on this thing.
   </p>

@@ -1,33 +1,34 @@
 <nav class="top-bar show-for-large-down nav">
   <ul class="title-area">
-    <li class="name">Navigate to...</li>
+    <li class="name">
+      {% if guest %}
+        Hey {{ guest.first_name }}, choose
+      {% else %}
+        Choose
+      {% endif %}
+      a section <i class="fas fa-arrow-alt-right"></i>
+    </li>
     <li class="toggle-topbar menu-icon">
-      <a href="#"><span></span></a>
+      <a href="#">
+        <span></span>
+      </a>
     </li>
   </ul>
   <section class="top-bar-section">
     <ul>
-      <li>
-        <a href="#section-0"><i class="fa fa-arrow-up"></i></a>
-      </li>
-      <li>
-        <a href="#section-1">Our Story</a>
-      </li>
-      <li>
-        <a href="#section-2">Photos</a>
-      </li>
-      <li>
-        <a href="#section-3">Groomsmen</a>
-      </li>
-      <li>
-        <a href="#section-4">Bridesmaids</a>
-      </li>
-      <li>
-        <a href="#section-5">Gifts</a>
-      </li>
-      <li>
-        <a href="#section-6">Rsvp</a>
-      </li>
+      {% for section in sections %}
+        {% if section.title or forloop.first %}
+          <li>
+            <a href="#section-{{ forloop.counter0 }}">
+              {% if forloop.first %}
+                <i class="fa fa-arrow-up"></i>
+              {% else %}
+                {{ section.title }}
+              {% endif %}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
     </ul>
   </section>
 </nav>

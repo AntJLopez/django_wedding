@@ -1,7 +1,8 @@
 {% load staticfiles %}
 {% load mathfilters %}
 
-<div class="{% if sec_no|mod:2 == 1 %}section-odd {% endif %}row" id="section-{{ forloop.counter0 }}">
+<div class="{% if forloop.counter0|mod:2 == 1 %}section-odd {% endif %}row"
+     id="section-{{ forloop.counter0 }}">
   {% if section.title %}
     <div class="section-title-container">
       <h2 class="section-title">{{ section.title }}</h2>

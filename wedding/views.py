@@ -9,10 +9,34 @@ def home(request):
     sections.append({
         'template': 'wedding/sections/header.html'})
     sections.append({
+        'title': 'Our Story',
+        'template': 'wedding/sections/our_story.html'})
+    sections.append({
+        'title': 'The Proposal',
+        'template': 'wedding/sections/proposal.html'})
+    sections.append({
         'title': 'Wedding Party',
-        'template': 'wedding/sections/wedding_party.html'
-    })
-
+        'template': 'wedding/sections/wedding_party.html'})
+    sections.append({
+        'title': 'Family',
+        'template': 'wedding/sections/family.html'})
+    sections.append({
+        'title': 'Schedule',
+        'template': 'wedding/sections/schedule.html'})
+    sections.append({
+        'title': 'Getting There',
+        'template': 'wedding/sections/directions.html'})
+    sections.append({
+        'template': 'wedding/sections/map.html'})
+    sections.append({
+        'title': 'Accommodations',
+        'template': 'wedding/sections/accommodations.html'})
+    sections.append({
+        'title': 'Gifts',
+        'template': 'wedding/sections/gifts.html'})
+    sections.append({
+        'title': 'RSVP',
+        'template': 'wedding/sections/rsvp.html'})
     params = {
         'sections': sections,
         'google_api_key': GOOGLE_API_KEY
