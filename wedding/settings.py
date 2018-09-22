@@ -10,7 +10,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INSTALLED_APPS = [
     # Local Apps
     'guests.apps.GuestsConfig',
-    'profiles.apps.ProfilesConfig',
     'sections.apps.SectionsConfig',
 
     # Third Party Apps
