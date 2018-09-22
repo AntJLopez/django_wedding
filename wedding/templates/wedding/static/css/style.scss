@@ -190,7 +190,7 @@ blockquote.caption-2:before {
 	bottom: 20px;
 }
 .tickets {
-  background: url(../icons/flaticon/svg/003-tickets.svg) no-repeat center bottom;
+  background: url(../img/flaticon/svg/003-tickets.svg) no-repeat center bottom;
 	display: block;
 	height: 2em;
 	position: relative;
@@ -274,33 +274,38 @@ div[id*="section-"] {
 
 /*==== Block Grid ====*/
 
-.block-grid li {
-	margin-bottom: 0.88em;
+.block-grid {
+  li {
+    margin-bottom: 0.88em;
+  }
+  .block-logo {
+  	background-color: $side_nav_select_color;
+  	border-radius: 10px;
+  	display: table-cell;
+  	height: 10em;
+  	text-align: center;
+  	padding: 4em;
+  	vertical-align: middle;
+  	width: 50%;
+  }
 }
-.block-grid .block-logo {
-	background-color: $side_nav_select_color;
-	border-radius: 10px;
-	display: table-cell;
-	height: 10em;
-	text-align: center;
-	padding: 4em;
-	vertical-align: middle;
-	width: 50%;
-}
-.block-logo:hover {
-	background-color: $side_nav_select_color;
-	cursor: pointer;
-}
-.block-logo img {
-	opacity: .5;
-	-webkit-filter: grayscale(1);
-	-webkit-transition: all .6s ease; /* Fade to color for Chrome and Safari */
+.block-logo {
+  img {
+    opacity: .5;
+    -webkit-filter: grayscale(1);
+    -webkit-transition: all .6s ease; /* Fade to color for Chrome and Safari */
     -webkit-backface-visibility: hidden; /* Fix for transition flickering */
+    }
+  &hover{
+    background-color: $side_nav_select_color;
+    cursor: pointer;
+  }
 }
 .block-logo:hover img {
 	opacity: 1;
 	-webkit-filter: grayscale(0)
 }
+
 .visible-img img {
 	width: auto;
 }

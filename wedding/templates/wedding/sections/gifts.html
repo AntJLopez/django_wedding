@@ -1,7 +1,44 @@
 {% extends 'wedding/sections/section.html' %}
+{% load staticfiles %}
 
 {% block content %}
-<p>
-  Give us gifts.
-</p>
+<div class="small-12 large-8 large-centered columns wrapper">
+  <ul class="small-block-grid-1 large-block-grid-3 block-grid">
+    <li>
+      <a href="#" class="block-logo">
+        <svg viewBox="0 0 100 100" class="icon">
+          <use xlink:href="#flowers" />
+        </svg>
+        <p>
+          Landscape our Yard
+        </p>
+        <!-- Landscape our Yard -->
+        <!-- <img src="{% static 'img/logo-1.png' %}" alt="Logo" /> -->
+      </a>
+    </li>
+    <li>
+      <a href="#" class="block-logo">
+        <svg viewBox="0 0 100 100" class="icon">
+          <use xlink:href="#kitchen" />
+        </svg>
+        <p>
+          Update our Kitchen
+        </p>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="block-logo">
+        <svg viewBox="0 0 100 100" class="icon">
+          <use xlink:href="#sofa" />
+        </svg>
+        <p>
+          Finish our Basement
+        </p>
+      </a>
+    </li>
+  </ul>
+  <p class="content-block">
+    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
+  </p><!-- END .content-block -->
+</div>
 {% endblock %}
