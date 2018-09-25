@@ -29,14 +29,14 @@
 
 	/*==== The Logo ====*/
 
-	.logo {		
+	.logo {
 		margin:1em auto 0;
 	}
 	.logo a {
 		border-radius: 0;
 	}
 	.ribbon {
-		background:url(../img/ribbon.png) bottom left repeat-x;		
+		background:url(../img/ribbon.png) bottom left repeat-x;
 	}
 
 	/*==== The Grid ====*/
@@ -55,25 +55,25 @@
 		margin-right: 5px;
 		width: 185px;
 	}
-	.section-title {	
-		font-size: 6em;			
-		width: auto;	
+	.section-title {
+		font-size: 6em;
+		width: auto;
 	}
 	.section-title em {
 		display: inline;
 	}
 	.section-title span:first-child {
-		margin-right: -15px;	
+		margin-right: -15px;
 	}
 	.section-title span:last-child {
-		margin-left: -10px;	
-	}	
-	.block-grid .block-logo {
+		margin-left: -10px;
+	}
+	/* .block-grid .block-logo {
 		height: 15em;
 		text-align: center;
-		padding: 4em;
-		width: 50%;	
-	}
+		padding: 0em;
+		width: 50%;
+	} */
 
 	/*==== Carousel +  Flexslider ====*/
 
@@ -84,7 +84,7 @@
 	/*==== Form ====*/
 
 	.rsvp-form fieldset {
-		padding: 2.5em;	
+		padding: 2.5em;
 	}
 
 	/*==== Date Block ====*/
@@ -93,18 +93,18 @@
 		padding: 3em;
 		text-align: left;
 	}
-	.date-container.col-1 {			
+	.date-container.col-1 {
 		border-bottom: none;
 		text-align: right;
 		padding-bottom: 0;
 	}
 	.date-container.col-2 {
 		border-left: 1px solid #e4e4e4;
-	} 
-	.date-container .day-date {
-		font-size: 1.250em;		
 	}
-	.date-container .day-time, 
+	.date-container .day-date {
+		font-size: 1.250em;
+	}
+	.date-container .day-time,
 	.date-container .day-address {
 		font-size: 1.563em;
 	}
@@ -119,7 +119,7 @@
 	}
 	footer .credit {
 		text-align: right;
-	}	
+	}
 
 }
 
@@ -147,13 +147,13 @@
 
 	/*==== The Logo ====*/
 
-	.logo {		
+	.logo {
 		margin:auto;
 	}
 
 	/*==== Visibility ====*/
 
-	.hide-for-large, 
+	.hide-for-large,
 	.hide-for-large-down {
 		display: inherit !important;
 	}
@@ -174,14 +174,14 @@
 	}
 
 	/*==== The Sidebar ====*/
-	
+
 	aside {
 		height: 100%;
 		position: fixed!important;
 		float: left;
 		display: block;
 		left: 0;
-		z-index: 10;	
+		z-index: 10;
 	}
 	#main > .row {
 		padding-top: 0;
@@ -196,7 +196,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
-	
+
 	/*==== The Top Bar ====*/
 
 	.top-bar {
@@ -211,13 +211,13 @@
 	}
 
 	/*==== The Header ====*/
-	
+
 	header {
 		margin-top: 4em;
 	}
 
 	/*==== Gifts Grid ====*/
-	
+
 	#section-5 .large-6 {
 		width: 66.66667%;
 	}
@@ -229,7 +229,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
-	
+
 	blockquote {
 		padding: 2em 2em 4em;
 	}
@@ -238,7 +238,7 @@
 
 	.date-container {
 		padding:3em;
-	} 
+	}
 	.date-section > .large-6 {
 		width: 100%;
 	}
@@ -252,7 +252,7 @@
 	}
 
 	/*==== Gifts Grid ====*/
-	
+
 	#section-5 .large-6 {
 		width: 83.33333%;
 	}
@@ -264,7 +264,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-     
+
     .hearts {
 		background: url(../img/icon-hearts@2x.png) no-repeat center bottom;
 		background-size: 56px 29px;

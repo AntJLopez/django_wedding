@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     # Local Apps
     'guests.apps.GuestsConfig',
     'sections.apps.SectionsConfig',
+    'payments.apps.PaymentsConfig',
 
     # Third Party Apps
     'django_countries',

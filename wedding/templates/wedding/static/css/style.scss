@@ -284,13 +284,13 @@ div[id*="section-"] {
   	display: table-cell;
   	height: 10em;
   	text-align: center;
-  	padding: 4em;
+  	padding: 20%;
   	vertical-align: middle;
   	width: 50%;
   }
 }
 .block-logo {
-  img {
+  svg {
     opacity: .5;
     -webkit-filter: grayscale(1);
     -webkit-transition: all .6s ease; /* Fade to color for Chrome and Safari */
@@ -301,7 +301,7 @@ div[id*="section-"] {
     cursor: pointer;
   }
 }
-.block-logo:hover img {
+.block-logo:hover svg {
 	opacity: 1;
 	-webkit-filter: grayscale(0)
 }

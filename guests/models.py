@@ -89,3 +89,25 @@ class Guest(models.Model):
         blank=True,
         max_length=60)
     notes = models.TextField(blank=True)
+
+
+class Activity(models.Model):
+    def __str__(self):
+        return self.activity
+
+    activity = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name_plural = 'Activities'
+
+
+class RSVP(models.Model):
+    lead = models.ForeignKey(Guest, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    attending = models.BooleanField()
+    attending_kuwait = models.BooleanField(default=False)
+    nights_onsite = models.PositiveSmallIntegerField(default=0)
+    activities = models.ManyToManyField(Activity, related_name='participants')
+
+    class Meta:
+        verbose_name = 'RSVP'
