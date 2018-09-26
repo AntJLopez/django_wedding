@@ -1,189 +1,215 @@
-$(document).ready(function() {
+/* global google */
 
-	/*-----------------------------------------------------------------------------------*/
-	/*	Smooth Scroll
-	/*  Thanks to: https://github.com/davist11/jQuery-One-Page-Nav
-	/*-----------------------------------------------------------------------------------*/
+$(document).ready(() => {
+  /*-----------------------------------------------------------------------------------*/
+  /*  Smooth Scroll
+  /*  Thanks to: https://github.com/davist11/jQuery-One-Page-Nav
+  /*-----------------------------------------------------------------------------------*/
 
-	function smoothScroll(){
-		$(".nav").onePageNav({
-			filter: ':not(.external)',
-			scrollSpeed: 1500
-		});
+  function smoothScroll() {
+    const formTarget = $('.js-form'); // Assign this class to corresponding section on Index.html    $('.nav').onePageNav({
 
-		var formTarget = $(".js-form"); // Assign this class to corresponding section on Index.html
+    $('.nav').onePageNav({
+      filter: ':not(.external)',
+      scrollSpeed: 1500,
+    });
 
-		// Scrolls to form section
-		$(".js-scroll").on("click", function() {
-			$('html, body').animate({
-				scrollTop: formTarget.offset().top
-			}, 2000);
-			return false;
-		});
+    // Scrolls to form section
+    $('.js-scroll').on('click', () => {
+      $('html, body').animate(
+        {
+          scrollTop: formTarget.offset().top,
+        },
+        2000,
+      );
+      return false;
+    });
 
-		return false;
-	}
+    return false;
+  }
+  smoothScroll();
 
-	smoothScroll();
+  /*-----------------------------------------------------------------------------------*/
+  /*  Backstretch
+  /*  Thanks to: http://srobbin.com/jquery-plugins/backstretch/
+  /*-----------------------------------------------------------------------------------*/
 
-	/*-----------------------------------------------------------------------------------*/
-	/*	Backstretch
-	/*  Thanks to: http://srobbin.com/jquery-plugins/backstretch/
-	/*-----------------------------------------------------------------------------------*/
+  function backStrech() {
+    $('aside').backstretch([
+      '/static/img/placeholder-1.jpg',
+      '/static/img/placeholder-2.jpg',
 
-	function backStrech() {
-		$("aside").backstretch([
-			"/static/img/placeholder-1.jpg",
-			"/static/img/placeholder-2.jpg",
+    ], { duration: 5000, fade: 1000 });
+  }
+  backStrech();
 
-			], {duration: 5000, fade: 1000});
-	}
+  /*-----------------------------------------------------------------------------------*/
+  /*  Flexslider
+  /*  Thanks to: http://www.woothemes.com/flexslider/
+  /*-----------------------------------------------------------------------------------*/
 
-	backStrech();
+  function flexSlider() {
+    $('.flexslider').flexslider({
+      animation: 'slide',
+      slideshow: false,
+      touch: true,
+    });
+  }
 
-	/*-----------------------------------------------------------------------------------*/
-	/*	Flexslider
-	/*  Thanks to: http://www.woothemes.com/flexslider/
-	/*-----------------------------------------------------------------------------------*/
+  flexSlider();
 
-	function flexSlider(){
-		$('.flexslider').flexslider({
-			animation: "slide",
-			slideshow: false,
-			touch: true
-		});
-	}
+  /*-----------------------------------------------------------------------------------*/
+  /*  RSVP Form Validation + Submission
+  /*-----------------------------------------------------------------------------------*/
 
-	flexSlider();
+  function rsvpFormSubmit() {
+    // this is the id of the form
+    const formID = $('#js-form');
 
-	/*-----------------------------------------------------------------------------------*/
-	/*	RSVP Form Validation + Submission
-	/*-----------------------------------------------------------------------------------*/
+    // submits form with ajax method
+    formID.on('submit', () => {
+      $.ajax({
+        url: 'mailer.php',
+        type: 'POST',
+        data: formID.serialize(), // serializes the form's elements.
+        success(data) {
+          $('.js-display')
+            .addClass('message-panel')
+            .html(data); // show response from the php script.
+        },
+      });
 
-	function rsvpFormSubmit() {
+      return false; // avoid to execute the actual submit of the f
+    });
 
-		// this is the id of the form
-		var formID = $("#js-form");
-		
-		// submits form with ajax method
-		formID.on("submit", function() {
-
-			$.ajax({
-				url: "mailer.php",
-				type: "POST",		    	
-		        data: formID.serialize(), // serializes the form's elements.
-
-		        success: function(data) {
-		        	$(".js-display")
-		        				.addClass("message-panel")
-		        				.html(data); // show response from the php script.
-		        }		    
-
-		    });
-
-		    return false; // avoid to execute the actual submit of the form.
-
-		});
-
-		// Show/Hide RSVP Menu selection on accept/decline
-		$(".decline").on("click", function(){
-			$(".rsvp-meal-choice").fadeOut();
-		});	
-		$(".accept").on("click", function(){
-			$(".rsvp-meal-choice").fadeIn();
-		});	
-
-	}
-	rsvpFormSubmit();
+    // Show/Hide RSVP Menu selection on accept/decline
+    $('.decline').on('click', () => {
+      $('.rsvp-meal-choice').fadeOut();
+    });
+    $('.accept').on('click', () => {
+      $('.rsvp-meal-choice').fadeIn();
+    });
+  }
+  rsvpFormSubmit();
 
 
-    /*-----------------------------------------------------------------------------------*/
-	/*	DataTables
-	/*-----------------------------------------------------------------------------------*/
-    function prepare_datatable(){
-        $('#guest_list').DataTable({
-            "paging": false,
-            "responsive": true,
-            "colReorder": true,
-            "fixedHeader": true
-        });
-    };
-    
-    prepare_datatable();
+  /*-----------------------------------------------------------------------------------*/
+  /*  Gift Form
+  /*-----------------------------------------------------------------------------------*/
 
+  function giftFormSubmit() {
+    const formID = $('#gift_form'); // The ID of the gift form
+    const url = '/payments/make_gift/';
 
+    formID.on('submit', (e) => {
+      e.preventDefault();
+      const formData = formID.serialize();
+
+      $.post(
+        url,
+        formData,
+        (data) => { // eslint-disable-line
+        },
+      );
+    });
+  }
+  giftFormSubmit();
+
+  /*-----------------------------------------------------------------------------------*/
+  /*  DataTables
+  /*-----------------------------------------------------------------------------------*/
+  function prepareDatatable() {
+    $('#guest_list').DataTable({
+      paging: false,
+      responsive: true,
+      colReorder: true,
+      fixedHeader: true,
+    });
+  }
+  prepareDatatable();
 });
 
 /*-----------------------------------------------------------------------------------*/
-/*	Google Map API 
+/*  Google Map API
 /*  Credit to: http://stiern.com/tutorials/adding-custom-google-maps-to-your-website/
 /*-----------------------------------------------------------------------------------*/
 
-var map;
-var myLatlng = new google.maps.LatLng(42.279629,-73.072101); // Specify YOUR coordinates
+let map;
+const myLatlng = new google.maps.LatLng(42.279629, -73.072101); // Specify YOUR coordinates
 
-var MY_MAPTYPE_ID = 'custom_style';
+const MY_MAPTYPE_ID = 'custom_style';
 
 function initialize() {
+  /*----------------------------------------------------------------------------*/
+  /* Creates a custom color scheme for map
+  /* For details on styling go to the link below:
+  /* http://www.evoluted.net/thinktank/web-design/custom-google-maps-style-tool */
+  /*----------------------------------------------------------------------------*/
 
-	/*----------------------------------------------------------------------------*/
-	/* Creates a custom color scheme for map
-	/* For details on styling go to the link below:
-	/* http://www.evoluted.net/thinktank/web-design/custom-google-maps-style-tool */
-	/*----------------------------------------------------------------------------*/
-	
-	var featureOpts = [
-		{
-			"featureType": "road",
-			"stylers": [
-				{ "hue": "#ff3300" },
-				{ "gamma": 0.82 },
-				{ "visibility": "on" },
-				{ "saturation": 62 },
-				{ "lightness": -7 }
-			]
-		},{
-			"featureType": "poi",
-			"stylers": [
-				{ "hue": "#ff0000" },
-				{ "lightness": 14 }
-			]
-		},{
-			"stylers": [
-				{ "hue": "#ff0000" }
-			]
-		}
-	]
+  const featureOpts = [
+    {
+      featureType: 'road',
+      stylers: [
+        { hue: '#191970' },
+        { gamma: 0.82 },
+        { visibility: 'on' },
+        { saturation: 62 },
+        { lightness: -7 },
+      ],
+    },
+    {
+      featureType: 'poi',
+      stylers: [
+        { hue: '#f4d35e' },
+        { lightness: 14 },
+      ],
+    },
+    {
+      stylers: [
+        { hue: '#191970' },
+      ],
+    },
+  ];
 
-	var mapOptions = {
-		zoom: 16,
-		center: myLatlng,
-        disableDefaultUI: true,
-		mapTypeControlOptions: {
-			mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID]
-		},
-		mapTypeId: MY_MAPTYPE_ID
-	};
+  const mapOptions = {
+    zoom: 16,
+    center: myLatlng,
+    disableDefaultUI: true,
+    mapTypeControlOptions: {
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, MY_MAPTYPE_ID],
+    },
+    mapTypeId: MY_MAPTYPE_ID,
+  };
 
-	map = new google.maps.Map(document.getElementById('map-canvas'),
-		mapOptions);
+  map = new google.maps.Map(
+    document.getElementById('map-canvas'),
+    mapOptions,
+  );
 
-	var styledMapOptions = {
-		name: 'Custom Style'
-	};
+  const styledMapOptions = {
+    name: 'Custom Style',
+  };
 
-	var customMapType = new google.maps.StyledMapType(featureOpts, styledMapOptions);
+  const customMapType = new google.maps.StyledMapType(
+    featureOpts, styledMapOptions,
+  );
 
-	var image = new google.maps.MarkerImage("/static/img/map-marker@2x.png", null, null, null, new google.maps.Size(55,57));
+  const image = new google.maps.MarkerImage(
+    '/static/img/map-marker@2x.png',
+    null,
+    null,
+    null,
+    new google.maps.Size(55, 57),
+  );
 
-	// Includes custom marker on map
-	var beachMarker = new google.maps.Marker({
-		position: myLatlng,
-		map: map,
-		icon: image
-	});
+  // Includes custom marker on map
+  const venueMarker = new google.maps.Marker({
+    position: myLatlng,
+    icon: image,
+  });
+  venueMarker.setMap(map);
 
-	map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
+  map.mapTypes.set(MY_MAPTYPE_ID, customMapType);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

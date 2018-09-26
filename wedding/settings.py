@@ -1,6 +1,7 @@
 import os
 from .local_settings import (  # noqa
-    DATABASES, SECRET_KEY, ALLOWED_HOSTS, DEBUG)
+    DATABASES, SECRET_KEY, ALLOWED_HOSTS, DEBUG, STRIPE_PUBLIC_KEY,
+    STRIPE_SECRET_KEY)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404  # noqa
 from django.contrib.auth.decorators import login_required  # noqa
 from .local_settings import GOOGLE_API_KEY
 from guests.models import Guest
+from payments.forms import GiftForm
 
 
-def home(request):
+def home(request, gift_form=GiftForm()):
     sections = []
     sections.append({
         'template': 'wedding/sections/header.html'})
@@ -39,7 +40,8 @@ def home(request):
         'template': 'wedding/sections/rsvp.html'})
     params = {
         'sections': sections,
-        'google_api_key': GOOGLE_API_KEY
+        'google_api_key': GOOGLE_API_KEY,
+        'gift_form': gift_form
     }
     try:
         guest = Guest.objects.get(id=request.session['guest'])

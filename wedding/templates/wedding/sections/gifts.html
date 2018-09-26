@@ -40,9 +40,56 @@
   <p class="content-block">
     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
   </p>
-  <form data-abide method="POST" action="#" class="rsvp-form custom" id="js-form">
+  <form data-abide method="POST" class="gift-form custom" action="{% url 'make_gift' %}" id="gift_form">
+    {% csrf_token %}
+    <div class="gift-display"></div>
+    <div class="fieldWrapper">
+      <label for="{{ gift_form.amount.id_for_label }}">
+        Amount
+      </label>
+      {{ gift_form.amount }}
+      <small class="error"></small>
+    </div>
+    <div class="fieldWrapper">
+      <label for="{{ gift_form.category_id.id_for_label }}">
+        Category ID
+      </label>
+      {{ gift_form.category_id }}
+      <small class="error"></small>
+    </div>
+    {% if guest %}
+      <input type="hidden" id="guest_id" name="guest_id" value="{{ guest.id }}">
+    {% else %}
+      <div class="fieldWrapper">
+        <label for="{{ gift_form.first_name.id_for_label }}">
+          First Name
+        </label>
+        {{ gift_form.first_name }}
+        <small class="error"></small>
+      </div>
+      <div class="fieldWrapper">
+        <label for="{{ gift_form.last_name.id_for_label }}">
+          Last Name
+        </label>
+        {{ gift_form.last_name }}
+        <small class="error"></small>
+      </div>
+      <div class="fieldWrapper">
+        <label for="{{ gift_form.email.id_for_label }}">
+          Email
+        </label>
+        {{ gift_form.email }}
+        <small class="error"></small>
+      </div>
+    {% endif %}
+    <button type="submit" class="button radius" id="gift-submit-btn">
+      <i class="fa fa-envelope"></i>
+      <span class="btn-label">Make a Gift</span>
+    </button>
+  </form>
+  <!-- <form data-abide method="POST" action="#" class="rsvp-form custom" id="js-form">
     <fieldset class="rsvp-details">
-      <!-- Displays a global alert if required fields are missing -->
+      COMMENT: Displays a global alert if required fields are missing
       <div class="js-display"></div>
       <legend>
         Kindly respond by <strong>March 14, 2014</strong>. We look forward to celebrating with you!
@@ -117,6 +164,6 @@
       <i class="fa fa-envelope"></i>
       <span class="btn-label">Send</span>
     </button>
-  </form>
+  </form> -->
 </div>
 {% endblock %}

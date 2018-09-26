@@ -10,6 +10,17 @@ class PaymentCategory(models.Model):
             return f'{str(self.parent)}—{self.name}'
         return self.name
 
+    def has_subcategory(self):
+        child = PaymentCategory.objects.filter(parent=self).first()
+        return bool(child)
+
+    def is_gift(self):
+        if str(self) == 'Gift':
+            return True
+        if self.parent:
+            return self.parent.is_gift()
+        return False
+
     name = models.CharField(max_length=100)
     parent = models.ForeignKey(
         'self', blank=True, null=True, related_name='children',
@@ -46,4 +57,4 @@ class Payment(models.Model):
     category = models.ForeignKey(
         PaymentCategory, null=True, on_delete=models.SET_NULL)
     payer = models.ForeignKey(Payer, on_delete=models.CASCADE)
-    stripe_id = models.CharField(max_length=255)
+    stripe_id = models.CharField(blank=True, max_length=255)
