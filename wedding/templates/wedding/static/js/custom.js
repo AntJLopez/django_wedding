@@ -1,4 +1,4 @@
-/* global google */
+/* global google, stripe, elements */
 
 $(document).ready(() => {
   /*-----------------------------------------------------------------------------------*/
@@ -57,6 +57,28 @@ $(document).ready(() => {
   }
 
   flexSlider();
+  /*-----------------------------------------------------------------------------------*/
+  /*  Stripe Configuration
+  /*-----------------------------------------------------------------------------------*/
+
+  const style = {
+    base: {
+      fontSize: '16px',
+      color: '#32325d',
+    },
+  };
+
+  const giftCC = elements.create('card', { style });
+  giftCC.mount('#gift-cc');
+
+  giftCC.addEventListener('change', ({ error }) => {
+    const displayError = $('#gift-cc-errors');
+    if (error) {
+      displayError.text(error.message);
+    } else {
+      displayError.text(error.message);
+    }
+  });
 
   /*-----------------------------------------------------------------------------------*/
   /*  RSVP Form Validation + Submission
@@ -101,16 +123,31 @@ $(document).ready(() => {
     const formID = $('#gift_form'); // The ID of the gift form
     const url = '/payments/make_gift/';
 
-    formID.on('submit', (e) => {
+    formID.on('submit', async (e) => {
       e.preventDefault();
-      const formData = formID.serialize();
+      const { token, error } = await stripe.createToken(giftCC);
+      const errorElement = $('#gift-cc-errors');
 
-      $.post(
-        url,
-        formData,
-        (data) => { // eslint-disable-line
-        },
-      );
+      if (error) {
+        errorElement.text(error.message);
+      } else {
+        errorElement.text('');
+
+        const formData = formID.serializeArray();
+        formData.push({ name: 'stripe_token', value: token.id });
+
+        $.post(
+          url,
+          formData,
+          (data) => { // eslint-disable-line
+            if ($.isEmptyObject(data.errors)) {
+              $('#gift-display').text('Success!').addClass('message-panel');
+              formID.trigger('reset');
+              giftCC.clear();
+            }
+          },
+        );
+      }
     });
   }
   giftFormSubmit();

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404  # noqa
 from django.contrib.auth.decorators import login_required  # noqa
-from .local_settings import GOOGLE_API_KEY
+from .local_settings import GOOGLE_API_KEY, STRIPE_PUBLIC_KEY
 from guests.models import Guest
 from payments.forms import GiftForm
 
@@ -41,6 +41,7 @@ def home(request, gift_form=GiftForm()):
     params = {
         'sections': sections,
         'google_api_key': GOOGLE_API_KEY,
+        'stripe_public_key': STRIPE_PUBLIC_KEY,
         'gift_form': gift_form
     }
     try:

@@ -3,167 +3,113 @@
 
 {% block content %}
 <div class="small-12 large-8 large-centered columns wrapper">
-  <ul class="small-block-grid-1 large-block-grid-3 block-grid">
-    <li>
-      <a href="#" class="block-logo">
-        <svg viewBox="0 0 100 100" class="icon">
-          <use xlink:href="#flowers" />
-        </svg>
-        <h3>
-          Landscape our Yard
-        </h3>
-        <!-- Landscape our Yard -->
-        <!-- <img src="{% static 'img/logo-1.png' %}" alt="Logo" /> -->
-      </a>
-    </li>
-    <li>
-      <a href="#" class="block-logo">
-        <svg viewBox="0 0 100 100" class="icon">
-          <use xlink:href="#kitchen" />
-        </svg>
-        <h3>
-          Update our Kitchen
-        </h3>
-      </a>
-    </li>
-    <li>
-      <a href="#" class="block-logo">
-        <svg viewBox="0 0 100 100" class="icon">
-          <use xlink:href="#sofa" />
-        </svg>
-        <h3>
-          Finish our Basement
-        </h3>
-      </a>
-    </li>
-  </ul>
   <p class="content-block">
     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
   </p>
+  <span id="gift-display"></span>
   <form data-abide method="POST" class="gift-form custom" action="{% url 'make_gift' %}" id="gift_form">
     {% csrf_token %}
-    <div class="gift-display"></div>
-    <div class="fieldWrapper">
-      <label for="{{ gift_form.amount.id_for_label }}">
-        Amount
-      </label>
-      {{ gift_form.amount }}
-      <small class="error"></small>
-    </div>
-    <div class="fieldWrapper">
-      <label for="{{ gift_form.category_id.id_for_label }}">
-        Category ID
-      </label>
-      {{ gift_form.category_id }}
-      <small class="error"></small>
-    </div>
+    <fieldset class="gift-choice">
+      <legend>What would you like to give?</legend>
+      <ul class="small-block-grid-1 large-block-grid-3 block-grid">
+        <li>
+          <label for="yard" class="block-logo">
+            <svg viewBox="0 0 100 100" class="icon">
+              <use xlink:href="#flowers" />
+            </svg>
+            <h3 class="radio-label">
+              Landscape our Yard
+            </h3>
+            <input name="category_name" type="radio" id="landscape_yard" style="display:none;" value="Landscape Yard" required>
+          </a>
+        </li>
+        <li>
+          <label for="kitchen" class="block-logo">
+            <svg viewBox="0 0 100 100" class="icon">
+              <use xlink:href="#kitchen" />
+            </svg>
+            <h3 class="radio-label">
+              Update our Kitchen
+            </h3>
+            <input name="category_name" type="radio" id="update_kitchen" style="display:none;" value="Update Kitchen" required>
+          </a>
+        </li>
+        <li>
+          <label for="basement" class="block-logo">
+            <svg viewBox="0 0 100 100" class="icon">
+              <use xlink:href="#sofa" />
+            </svg>
+            <h3 class="radio-label">
+              Finish our Basement
+            </h3>
+            <input name="category_name" type="radio" id="finish_basement" style="display:none;" value="Finish Basement" required>
+          </a>
+        </li>
+      </ul>
+		</fieldset>
+    <fieldset class="amount">
+      <legend>How much would you like to give?</legend>
+      <div class="columns">
+        <div class="fieldWrapper">
+          <label for="{{ gift_form.amount.id_for_label }}">
+            Amount
+          </label>
+          {{ gift_form.amount }}
+      </div>
+      </div>
+    </fieldset>
+
     {% if guest %}
       <input type="hidden" id="guest_id" name="guest_id" value="{{ guest.id }}">
     {% else %}
-      <div class="fieldWrapper">
-        <label for="{{ gift_form.first_name.id_for_label }}">
-          First Name
-        </label>
-        {{ gift_form.first_name }}
-        <small class="error"></small>
-      </div>
-      <div class="fieldWrapper">
-        <label for="{{ gift_form.last_name.id_for_label }}">
-          Last Name
-        </label>
-        {{ gift_form.last_name }}
-        <small class="error"></small>
-      </div>
-      <div class="fieldWrapper">
-        <label for="{{ gift_form.email.id_for_label }}">
-          Email
-        </label>
-        {{ gift_form.email }}
-        <small class="error"></small>
-      </div>
+      <fieldset class="payer-details">
+        <legend>Who are you?</legend>
+        <div class="large-4 columns">
+          <div class="fieldWrapper">
+            <label for="{{ gift_form.first_name.id_for_label }}">
+              First Name
+            </label>
+            {{ gift_form.first_name }}
+          </div>
+        </div>
+        <div class="large-4 columns">
+          <div class="fieldWrapper">
+            <label for="{{ gift_form.last_name.id_for_label }}">
+              Last Name
+            </label>
+            {{ gift_form.last_name }}
+          </div>
+        </div>
+        <div class="large-4 columns">
+          <div class="fieldWrapper">
+            <label for="{{ gift_form.email.id_for_label }}">
+              Email Address
+            </label>
+            {{ gift_form.email }}
+          </div>
+        </div>
+      </fieldset>
     {% endif %}
+
+    <fieldset class="credit-details">
+      <legend>How would you like to pay?</legend>
+      <div class="columns">
+        <div class="fieldWrapper">
+          <label for="gift-cc">
+          </label>
+          <div class="fieldWrapper" id="gift-cc">
+          </div>
+          <div id="gift-cc-errors" role="alert">
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
     <button type="submit" class="button radius" id="gift-submit-btn">
       <i class="fa fa-envelope"></i>
       <span class="btn-label">Make a Gift</span>
     </button>
   </form>
-  <!-- <form data-abide method="POST" action="#" class="rsvp-form custom" id="js-form">
-    <fieldset class="rsvp-details">
-      COMMENT: Displays a global alert if required fields are missing
-      <div class="js-display"></div>
-      <legend>
-        Kindly respond by <strong>March 14, 2014</strong>. We look forward to celebrating with you!
-      </legend>
-      <div class="row">
-        <div class="large-6 columns">
-          <label for="firstname">First Name</label>
-          <input type="text" class="input-field" id="firstname" name="firstname" value="" placeholder="Your first name is required" required>
-          <small class="error">First Name is required.</small>
-        </div>
-        <div class="large-6 columns">
-          <label for="lastname">Last Name</label>
-          <input type="text" class="input-field" id="lastname" name="lastname" value="" placeholder="Your last name is required" required>
-          <small class="error">Last Name is required.</small>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-6 columns">
-          <label for="email">Email</label>
-          <input type="email" class="input-field" id="email" name="email" value="" placeholder="name@yourdomain.com" required>
-          <small class="error">Valid Email is required.</small>
-        </div>
-        <div class="large-6 columns">
-          <label for="phone">Phone</label>
-          <input type="tel" class="input-field" id="phone" name="phone" value="" placeholder="A phone number is optional">
-        </div>
-      </div>
-    </fieldset>
-    <fieldset class="rsvp-attendance">
-      <legend>Will you be attending?</legend>
-      <div class="large-6 columns">
-        <label for="radio1">
-          <input name="radio" type="radio" id="radio1" style="display:none;" value="Accepts with Pleasure!" required>
-          <span class="custom radio accept"></span>
-          <span class="radio-label">Accepts with Pleasure!</span>
-        </label>
-      </div>
-      <div class="large-6 columns">
-        <label for="radio2">
-          <input name="radio" type="radio" id="radio2" style="display:none;" value="Declines with Regret." required>
-          <span class="custom radio decline"></span>
-          <span class="radio-label">Declines with Regret.</span>
-        </label>
-      </div>
-    </fieldset>
-    <fieldset class="rsvp-meal-choice">
-      <legend>
-        Please select your meal choices
-      </legend>
-      <div class="row">
-          <div class="large-6 columns">
-            <label for="main-course">Main</label>
-            <select id="main-course" name="main-course">
-              <option selected>None</option>
-              <option>Chicken</option>
-              <option>Beef</option>
-              <option>Vegetarian</option>
-            </select>
-          </div>
-          <div class="large-6 columns">
-            <label for="dessert">Dessert</label>
-            <select id="dessert" name="dessert">
-              <option selected>None</option>
-              <option>Chocolate Cake</option>
-              <option>Lemon Cheesecake</option>
-              <option>Key Lime Pie</option>
-            </select>
-          </div>
-        </div>
-    </fieldset>
-    <button type="submit" class="button radius" id="js-submit-btn">
-      <i class="fa fa-envelope"></i>
-      <span class="btn-label">Send</span>
-    </button>
-  </form> -->
+
 </div>
 {% endblock %}

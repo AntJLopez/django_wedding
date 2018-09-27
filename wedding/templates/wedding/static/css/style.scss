@@ -467,6 +467,35 @@ label {
 	margin-bottom: 0.5em;
 }
 
+/*==== Gifts ====*/
+
+.gift-form {
+	margin:2em 0 4em;
+}
+.gift-form fieldset {
+	border-color:$form_element_color;
+	padding: 2em 0.5em;
+	margin: 1em 1em 3em;
+}
+.gift-form legend {
+	background: $background_a;
+	font-weight: normal;
+	padding: 0 1em;
+	line-height: 1.4;
+}
+.gift-form div[class*="large-"] {
+	padding-left:0.9375em!important;
+	padding-right:0.9375em!important;
+}
+.gift-choice label {
+	text-align:center;
+	display: inline-block;
+}
+.gift-choice .radio-label {
+	display: block;
+	margin-top: 1em;
+}
+
 /*==== RSVP ====*/
 
 .rsvp-form {
@@ -597,6 +626,13 @@ label.error {
 /*==== Notification Panel ====*/
 
 .message-panel {
+	background-color: $message_background_color;
+	border-color: $message_border_color;
+	padding: 1em;
+	font-size: 0.850em;
+	margin: 0 0 2em;
+}
+.gift-display {
 	background-color: $message_background_color;
 	border-color: $message_border_color;
 	padding: 1em;

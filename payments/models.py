@@ -7,7 +7,7 @@ from guests.models import Guest
 class PaymentCategory(models.Model):
     def __str__(self):
         if self.parent:
-            return f'{str(self.parent)}—{self.name}'
+            return f'{str(self.parent)} : {self.name}'
         return self.name
 
     def has_subcategory(self):
