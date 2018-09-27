@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from guests.models import Guest
 
 
 class PaymentCategory(models.Model):
@@ -38,7 +37,7 @@ class Payer(models.Model):
         return f'{self.first_name} {self.last_name}'
 
     guest = models.ForeignKey(
-        Guest, null=True, blank=True, on_delete=models.SET_NULL)
+        'guests.Guest', null=True, blank=True, on_delete=models.SET_NULL)
     first_name = models.CharField(blank=True, max_length=40)
     last_name = models.CharField(blank=True, max_length=40)
     email = email = models.EmailField(blank=True, max_length=200)

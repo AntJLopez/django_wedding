@@ -8,6 +8,29 @@ from decimal import Decimal
 INVITED_THRESHOLD = Decimal('0.40')
 
 
+class Activity(models.Model):
+    def __str__(self):
+        return self.activity
+
+    activity = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name_plural = 'Activities'
+
+
+class RSVP(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    attending = models.BooleanField()
+    attending_kuwait = models.BooleanField(default=False)
+    nights_onsite = models.PositiveSmallIntegerField(default=0)
+    activities = models.ManyToManyField(Activity, related_name='groups')
+    payment = models.ForeignKey(
+        'payments.Payment', blank=True, null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'RSVP'
+
+
 class GuestQuerySet(models.QuerySet):
     def leads(self):
         return self.filter(lead_partner=None, parent=None)
@@ -80,6 +103,9 @@ class Guest(models.Model):
         default=0,
         max_digits=2,
         decimal_places=2)
+    rsvp = models.ForeignKey(
+        RSVP, blank=True, null=True, related_name='guests',
+        on_delete=models.SET_NULL)
     family = models.PositiveSmallIntegerField(
         default=3,
         choices=(
@@ -132,25 +158,3 @@ class Guest(models.Model):
 
     # Model managers, for filtering queries
     objects = GuestQuerySet.as_manager()
-
-
-class Activity(models.Model):
-    def __str__(self):
-        return self.activity
-
-    activity = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = 'Activities'
-
-
-class RSVP(models.Model):
-    lead = models.ForeignKey(Guest, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
-    attending = models.BooleanField()
-    attending_kuwait = models.BooleanField(default=False)
-    nights_onsite = models.PositiveSmallIntegerField(default=0)
-    activities = models.ManyToManyField(Activity, related_name='participants')
-
-    class Meta:
-        verbose_name = 'RSVP'
