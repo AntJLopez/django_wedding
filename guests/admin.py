@@ -5,7 +5,7 @@ from .forms import RSVPForm
 
 @admin.register(Guest)
 class GuestAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('__str__', 'is_lead', 'invited', 'username',)
 
 
 @admin.register(RSVP)

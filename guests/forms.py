@@ -39,7 +39,13 @@ class RSVPForm(forms.ModelForm):
         fields = ['attending', 'attending_kuwait', 'nights_onsite', 'payment']
 
     activities = forms.ModelMultipleChoiceField(
-        queryset=Activity.objects.all())
+        queryset=Activity.objects.all(),
+        required=False,
+        help_text="Select interesting activities in (if any)")
+
+    guests = forms.ModelMultipleChoiceField(
+        queryset=Guest.objects.all(),
+        help_text='Select guests in RSVP')
 
     def __init__(self, *args, **kwargs):
         # Only if the form is built from an instance
@@ -52,6 +58,8 @@ class RSVPForm(forms.ModelForm):
             # primary keys for the selected activities
             initial['activities'] = [
                 a.pk for a in kwargs['instance'].activities.all()]
+            initial['guests'] = [
+                g.pk for g in kwargs['instance'].guests.all()]
         forms.ModelForm.__init__(self, *args, **kwargs)
 
     def save(self, commit=True):
@@ -66,6 +74,9 @@ class RSVPForm(forms.ModelForm):
             # Associate RSVP with activities
             instance.activities.clear()
             instance.activities.add(*self.cleaned_data['activities'])
+            # Associate Guests with RSVP
+            instance.guests.clear()
+            instance.guests.add(*self.cleaned_data['guests'])
         self.save_m2m = save_m2m
 
         # Only commit if commit == True

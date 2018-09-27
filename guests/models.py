@@ -19,7 +19,18 @@ class Activity(models.Model):
 
 
 class RSVP(models.Model):
+    def __str__(self):
+        leader = self.guests.first()
+        if leader and str(leader):
+            # Return the name of the leader of the party
+            return str(leader)
+        # If there is no named guest, name it by the date and time
+        d = self.created
+        ampm = 'pm' if d.hour >= 12 else 'am'
+        return f'{d:%b} {d.day}, {d.hour}:{d:%M} {ampm}'
+
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     attending = models.BooleanField()
     attending_kuwait = models.BooleanField(default=False)
     nights_onsite = models.PositiveSmallIntegerField(default=0)
@@ -47,8 +58,14 @@ class Guest(models.Model):
         # Returns True if guest has no name, False if they do
         return not bool(str(self))
 
+    def is_lead(self):
+        return not self.lead_partner and not self.parent
+    is_lead.boolean = True
+    is_lead.short_description = 'Group Lead'
+
     def invited(self):
         return self.percentile >= INVITED_THRESHOLD
+    invited.boolean = True
 
     def age(self):
         if self.birthday:
