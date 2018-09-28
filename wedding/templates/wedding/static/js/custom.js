@@ -121,7 +121,7 @@ $(document).ready(() => {
 
   function giftFormSubmit() {
     const formID = $('#gift_form'); // The ID of the gift form
-    const url = '/payments/make_gift/';
+    const url = formID.attr('action');
 
     formID.on('submit', async (e) => {
       e.preventDefault();

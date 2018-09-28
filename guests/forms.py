@@ -36,7 +36,9 @@ class GuestForm(forms.ModelForm):
 class RSVPForm(forms.ModelForm):
     class Meta:
         model = RSVP
-        fields = ['attending', 'attending_kuwait', 'nights_onsite', 'payment']
+        fields = [
+            'attending', 'attending_kuwait', 'nights_onsite', 'payment',
+            'message']
 
     activities = forms.ModelMultipleChoiceField(
         queryset=Activity.objects.all(),

@@ -2,42 +2,32 @@
 /*	Colors
 /*-----------------------------------------------------------------------------------*/
 
-$orangeish: #f78764;
-$light_orangeish: #f9a78e;
-$dark_orangeish: #cb6f52;
-$goldish: #b29a45;
-$light_goldish: #dec056;
-$dark_goldish: #867434;
+$primary:     #191970;  // Midnight Blue
+$secondary:   #f4d35e;  // Gold
+$tertiary:    #da4167;  // Pink
+$quarternary: #f78764;  // Orange
+$quinary:     #ebebd3;  // White
 
-$background_a: #eaeaf2;
-$background_b: #d5d5e5;
-$gold: #f4d35e;
-$dark_gold: #c8ad4d;
-
-$gold_a: rgba(244, 211, 94, 0.9);
-$light_gold_a: rgba(244, 215, 108, 0.9);
-$light_midnight: rgba(45, 45, 125, 0.9);
-$lighter_midnight: rgba(66, 66, 138, 0.9);
-$even_lighter_midnight: rgba(87, 87, 151, 0.9);
-
-$background_color: $background_a;
-$odd_section_color: $background_b;
-$header_color: midnightblue;
-$title_subtext_color: $goldish;
-$title_underline_color: $light_goldish;
-$date_accent_color: $dark_goldish;
+$odd_section_color: mix(white, $primary, 81.7%);
+$even_section_color: mix(white, $primary, 91%);
+$header_color: $primary;
+$title_subtext_color: mix(black, $secondary, 27%);
+$title_underline_color: mix(black, $secondary, 9%);
+$date_accent_color: mix(black, $secondary, 45%);
 $body_color: #838383;    // Only used once; for body text
-$hover_color: $dark_gold;   // Hover text for buttons and links
+$hover_color: mix(black, $secondary, 18%);  // Hover text for buttons and links
 $overlay_background_color: rgba(108, 108, 164, 0.7);  // When hovering over thumbnails
 
-$logo_color: $light_midnight;
-$side_nav_background: $lighter_midnight;
-$side_nav_select_color: #f7df89;
-$side_nav_border_top_color: $light_midnight;
+$logo_color: rgba(mix(white, $primary, 8.9%), 0.9);
+$side_nav_background: rgba(mix(white, $primary, 18%), 0.9);
+$side_nav_select_color: mix(white, $secondary, 27%);
+$side_nav_border_top_color: rgba(mix(white, $primary, 8.9%), 0.9);
 $small_nav_background_color: #111111;
 $small_nav_border_color: #222222;
 
-$form_element_color: #e6e6e6;
+$block_logo_color: transparent;  // mix(white, $secondary, 70%);
+
+$form_element_color: mix(white, $primary, 27%);
 $text_field_background_color: #F5F5F6;
 $text_field_color: #818b92;
 $error_color: #c60f13;
@@ -47,7 +37,6 @@ $text_error_border_color: #999999;
 
 $vertical_divider_color: #d9d9d9;  // Color of divider lines in columns
 $border_bottom_color: #e4e4e4;
-
 
 $message_background_color: #ffffe0;
 $message_border_color: #e6db55;
@@ -93,7 +82,7 @@ $emphasis_font: 'hangar_nine';
 /*-----------------------------------------------------------------------------------*/
 
 body {
-	background-color: $background_color;
+	background-color: $even_section_color;
 	color: $body_color;
 	font-family:'Roboto Slab', serif;
 	text-align: center;
@@ -266,7 +255,7 @@ div[id*="section-"] {
 	text-align: center;
 }
 .section-odd {
-	background:$odd_section_color;
+	background: $odd_section_color;
 }
 .btn-label {
 	margin-left: 0.5em;
@@ -279,7 +268,7 @@ div[id*="section-"] {
     margin-bottom: 0.88em;
   }
   .block-logo {
-  	background-color: $side_nav_select_color;
+  	background-color: $block_logo_color;
   	border-radius: 10px;
   	display: table-cell;
   	height: 10em;
@@ -467,78 +456,52 @@ label {
 	margin-bottom: 0.5em;
 }
 
-/*==== Gifts ====*/
+/*==== Gift & RSVP Forms ====*/
 
-.gift-form {
+.gift-form, .rsvp-form {
 	margin:2em 0 4em;
+  fieldset {
+  	border-color:$form_element_color;
+  	padding: 2em 0.5em;
+  	margin: 1em 1em 3em;
+  }
+  legend {
+  	background: transparent;
+  	font-weight: normal;
+  	padding: 0 1em;
+  	line-height: 1.4;
+  }
+  div[class*="large-"] {
+  	padding-left:0.9375em!important;
+  	padding-right:0.9375em!important;
+  }
 }
-.gift-form fieldset {
-	border-color:$form_element_color;
-	padding: 2em 0.5em;
-	margin: 1em 1em 3em;
+.gift-choice, .rsvp-attendance {
+  label {
+	  text-align:center;
+	  display: inline-block;
+  }
+  .radio-label {
+  	display: block;
+  	margin-top: 1em;
+  }
 }
-.gift-form legend {
-	background: $background_a;
-	font-weight: normal;
-	padding: 0 1em;
-	line-height: 1.4;
-}
-.gift-form div[class*="large-"] {
-	padding-left:0.9375em!important;
-	padding-right:0.9375em!important;
-}
-.gift-choice label {
-	text-align:center;
-	display: inline-block;
-}
-.gift-choice .radio-label {
-	display: block;
-	margin-top: 1em;
-}
-
-/*==== RSVP ====*/
-
-.rsvp-form {
-	margin:2em 0 4em;
-}
-.rsvp-form fieldset {
-	border-color:$form_element_color;
-	padding: 2em 0.5em;
-	margin: 1em 1em 3em;
-}
-.rsvp-form legend {
-	background: $background_a;
-	font-weight: normal;
-	padding: 0 1em;
-	line-height: 1.4;
-}
-.rsvp-form div[class*="large-"] {
-	padding-left:0.9375em!important;
-	padding-right:0.9375em!important;
-}
-.rsvp-attendance label {
-	text-align:center;
-	display: inline-block;
-}
-.rsvp-attendance .radio-label {
-	display: block;
-	margin-top: 1em;
-}
-
-form.custom .radio {
-	border: solid 5px $form_element_color;
-	height: 29px;
-	width: 30px;
-}
-form.custom .custom.radio.checked:before {
-	top: 4px;
-	left: 5px;
-	background-color: $form_element_color;
-	width: 10px;
-	height: 10px;
-}
-form.custom .dropdown {
-	text-align: left;
+form.custom {
+  .radio {
+	  border: solid 5px $form_element_color;
+	  height: 29px;
+	  width: 30px;
+  }
+  .custom.radio.checked:before {
+  	top: 4px;
+  	left: 5px;
+  	background-color: $form_element_color;
+  	width: 10px;
+  	height: 10px;
+  }
+  .dropdown {
+  	text-align: left;
+  }
 }
 
 /*==== Error Handling ====*/
@@ -625,21 +588,13 @@ label.error {
 
 /*==== Notification Panel ====*/
 
-.message-panel {
+.message-panel, .gift-display {
 	background-color: $message_background_color;
 	border-color: $message_border_color;
 	padding: 1em;
 	font-size: 0.850em;
 	margin: 0 0 2em;
 }
-.gift-display {
-	background-color: $message_background_color;
-	border-color: $message_border_color;
-	padding: 1em;
-	font-size: 0.850em;
-	margin: 0 0 2em;
-}
-
 
 /*-----------------------------------------------------------------------------------*/
 /*	5.	Image Gallery

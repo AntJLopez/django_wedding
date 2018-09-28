@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404  # noqa
 from django.contrib.auth.decorators import login_required  # noqa
 from .local_settings import GOOGLE_API_KEY, STRIPE_PUBLIC_KEY
 from guests.models import Guest
+from guests.forms import RSVPForm
 from payments.forms import GiftForm
 
 
-def home(request, gift_form=GiftForm()):
+def home(request, gift_form=GiftForm(), rsvp_form=RSVPForm()):
     sections = []
     sections.append({
         'template': 'wedding/sections/header.html'})
@@ -42,7 +43,8 @@ def home(request, gift_form=GiftForm()):
         'sections': sections,
         'google_api_key': GOOGLE_API_KEY,
         'stripe_public_key': STRIPE_PUBLIC_KEY,
-        'gift_form': gift_form
+        'gift_form': gift_form,
+        'rsvp_form': rsvp_form,
     }
     try:
         guest = Guest.objects.get(id=request.session['guest'])

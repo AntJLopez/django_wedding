@@ -1,7 +1,33 @@
 {% extends 'wedding/sections/section.html' %}
+{% load staticfiles %}
 
 {% block content %}
-<p>
-  This is the RSVP form.
-</p>
+<div class="small-12 large-8 large-centered columns wrapper">
+  {% if guest %}
+    <form data-abide method="POST" class="rsvp-form custom" action="#" id="rsvp_form">
+      {% csrf_token %}
+      <fieldset class="rsvp-attendance">
+        <legend>Will you be attending?</legend>
+        <div class="large-6 columns">
+          <label for="radio1">
+            <input name="attendance" type="radio" id="accept" style="display:none;" value=true required>
+            <span class="custom radio accept"></span>
+            <span class="radio-label">Absolutely!</span>
+          </label>
+        </div>
+        <div class="large-6 columns">
+          <label for="radio2">
+            <input name="attendance" type="radio" id="decline" style="display:none;" value=false required>
+            <span class="custom radio decline"></span>
+            <span class="radio-label">Sadly, no.</span>
+          </label>
+        </div>
+      </fieldset>
+    </form>
+  {% else %}
+    <p>
+      Please log in with the unique code from your invitation to RSVP.
+    </p>
+  {% endif %}
+</div>
 {% endblock %}

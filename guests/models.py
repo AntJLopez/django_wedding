@@ -37,6 +37,7 @@ class RSVP(models.Model):
     activities = models.ManyToManyField(Activity, related_name='groups')
     payment = models.ForeignKey(
         'payments.Payment', blank=True, null=True, on_delete=models.SET_NULL)
+    message = models.TextField(blank=True, default='')
 
     class Meta:
         verbose_name = 'RSVP'

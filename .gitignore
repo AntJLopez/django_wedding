@@ -9,6 +9,7 @@ db.json
 /static
 /venv
 /planning
+/node_modules
 original_template/
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
