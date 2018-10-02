@@ -26,26 +26,29 @@
       <fieldset class="rsvp-party attending">
         <legend>Who will be attending?</legend>
         {% for member in guest.party %}
-          <label for="attendance_{{ member.id }}">
-            <input type="checkbox" name="guests" id="attendance_{{ member.id }}">
-            <span class="custom checkbox"></span>
+          <div class="checkbox-line-wrapper">
+            <input
+              type="checkbox"
+              class="checkbox-item"
+              name="guests"
+              id="attendance_{{ member.id }}">
             {% if member.unnamed %}
-              <span class="name-wrapper">
                 <input
                   type="text"
+                  class="checkbox-item"
                   name="unnamed_first_{{ member.id }}"
                   id="unnamed_first_{{ member.id }}"
                   value="Guest First Name">
                 <input
                   type="text"
+                  class="checkbox-item"
                   name="unnamed_last_{{ member.id }}"
                   id="unnamed_last_{{ member.id }}"
                   value="Guest Last Name">
-              </span>
             {% else %}
-              <span class="checkbox-label">{{ member }}</span>
+              <span class="checkbox-item">{{ member }}</span>
             {% endif %}
-          </label>
+          </div>
         {% endfor %}
       </fieldset>
       <fieldset class="nights-onsite attending">
@@ -92,6 +95,13 @@
         <legend>Is there a message you'd like to share with us?</legend>
         {{ rsvp_form.message }}
       </fieldset>
+
+      <button type="submit" class="button radius" id="rsvp-submit-btn">
+        <svg class="icon">
+          <use xlink:href="#love-letter" />
+        </svg>
+        <span class="btn-label">Send RSVP</span>
+      </button>
     </form>
   {% else %}
     <p>

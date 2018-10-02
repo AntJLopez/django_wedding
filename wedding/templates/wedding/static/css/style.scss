@@ -384,7 +384,12 @@ button, .button {
 	-webkit-box-shadow: none;
 		    box-shadow: none;
 	text-transform: uppercase;
-	padding: 1.250em 1.5em;
+	padding: 0.7em 0.7em;
+  .icon {
+    vertical-align: middle;
+    max-height: 2em;
+    max-width: 2em;
+  }
 }
 button:hover,
 button:focus,
@@ -482,10 +487,6 @@ label {
   ul {
     list-style-type: none;
   }
-  .name-wrapper {
-    display: flex;
-    flex-direction: row;
-  }
 }
 .gift-choice, .rsvp-attendance, .nights-onsite {
   label {
@@ -503,10 +504,18 @@ label {
     margin: 0% 20% 10% 20%;
   }
 }
-.rsvp-party {
-  input {
-    display: inline;
-    vertical-align: top;
+.checkbox-line-wrapper {
+  display: flex;
+  align-items: center;
+  // input, .checkbox{
+  .checkbox-item {
+    flex-shrink: 0;
+    margin: 0.2em;
+    &[type="text"] {
+      flex-shrink: 1;
+      min-width: 10px;
+      max-width: 250px;
+    }
   }
 }
 form.custom {

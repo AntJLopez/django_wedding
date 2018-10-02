@@ -32,10 +32,16 @@
   </div>
 </div>
 
-<div class="callout">
-  <a class="button radius js-scroll" href="#">
-    <i class="fa fa-envelope"></i>
-    <span class="btn-label">Click here to RSVP today</span>
-  </a>
-</div>
+{% for section in sections|slice:"1:" %}
+  {% if section.title == 'RSVP' %}
+    <div class="callout">
+      <a class="button radius js-scroll" href="#section-{{ forloop.counter }}">
+        <svg class="icon">
+          <use xlink:href="#love-letter" />
+        </svg>
+        <span class="btn-label">Click Here to RSVP Today</span>
+      </a>
+    </div>
+  {% endif %}
+{% endfor %}
 {% endblock %}
