@@ -57,6 +57,7 @@ $(document).ready(() => {
   }
 
   flexSlider();
+
   /*-----------------------------------------------------------------------------------*/
   /*  Stripe Configuration
   /*-----------------------------------------------------------------------------------*/
@@ -79,41 +80,6 @@ $(document).ready(() => {
       displayError.text(error.message);
     }
   });
-
-  /*-----------------------------------------------------------------------------------*/
-  /*  RSVP Form Validation + Submission
-  /*-----------------------------------------------------------------------------------*/
-
-  function rsvpFormSubmit() {
-    // this is the id of the form
-    const formID = $('#js-form');
-
-    // submits form with ajax method
-    formID.on('submit', () => {
-      $.ajax({
-        url: 'mailer.php',
-        type: 'POST',
-        data: formID.serialize(), // serializes the form's elements.
-        success(data) {
-          $('.js-display')
-            .addClass('message-panel')
-            .html(data); // show response from the php script.
-        },
-      });
-
-      return false; // avoid to execute the actual submit of the f
-    });
-
-    // Show/Hide RSVP Menu selection on accept/decline
-    $('.decline').on('click', () => {
-      $('.rsvp-meal-choice').fadeOut();
-    });
-    $('.accept').on('click', () => {
-      $('.rsvp-meal-choice').fadeIn();
-    });
-  }
-  rsvpFormSubmit();
-
 
   /*-----------------------------------------------------------------------------------*/
   /*  Gift Form
@@ -151,6 +117,48 @@ $(document).ready(() => {
     });
   }
   giftFormSubmit();
+
+  /*-----------------------------------------------------------------------------------*/
+  /*  RSVP Form
+  /*-----------------------------------------------------------------------------------*/
+
+  function rsvpFormSubmit() {
+    // this is the id of the form
+    const formID = $('#js-form');
+
+    // submits form with ajax method
+    formID.on('submit', () => {
+      $.ajax({
+        url: 'mailer.php',
+        type: 'POST',
+        data: formID.serialize(), // serializes the form's elements.
+        success(data) {
+          $('.js-display')
+            .addClass('message-panel')
+            .html(data); // show response from the php script.
+        },
+      });
+
+      return false; // avoid to execute the actual submit of the f
+    });
+
+    // Show/Hide RSVP Menu selection on accept/decline
+    $('.decline').on('click', () => {
+      $('.attending').fadeOut();
+      $('.staying.').fadeOut();
+    });
+    $('.accept').on('click', () => {
+      $('.attending').fadeIn();
+    });
+
+    $('.onsite_0').on('click', () => {
+      $('.staying').fadeOut();
+    });
+    $('.onsite_1, .onsite_2').on('click', () => {
+      $('.staying').fadeIn();
+    });
+  }
+  rsvpFormSubmit();
 
   /*-----------------------------------------------------------------------------------*/
   /*  DataTables

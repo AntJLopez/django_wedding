@@ -43,6 +43,7 @@ class RSVPForm(forms.ModelForm):
     activities = forms.ModelMultipleChoiceField(
         queryset=Activity.objects.all(),
         required=False,
+        widget=forms.CheckboxSelectMultiple,
         help_text="Select interesting activities in (if any)")
 
     guests = forms.ModelMultipleChoiceField(
