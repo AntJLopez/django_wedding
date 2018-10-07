@@ -22,8 +22,8 @@ $logo_color: rgba(mix(white, $primary, 8.9%), 0.9);
 $side_nav_background: rgba(mix(white, $primary, 18%), 0.9);
 $side_nav_select_color: mix(white, $secondary, 27%);
 $side_nav_border_top_color: rgba(mix(white, $primary, 8.9%), 0.9);
-$small_nav_background_color: #111111;
-$small_nav_border_color: #222222;
+$small_nav_background_color: $side_nav_background;
+$small_nav_border_color: $side_nav_border_top_color;
 
 $block_logo_color: transparent;  // mix(white, $secondary, 70%);
 
@@ -463,6 +463,26 @@ label {
 
 /*==== Gift & RSVP Forms ====*/
 
+.input-icon {
+  position: relative;
+
+  > i {
+    position: absolute;
+    display: block;
+    transform: translate(0, -50%);
+    top: 67%;
+    pointer-events: none;
+    width: 1.75em;
+    text-align: center;
+    font-style: normal;
+  }
+
+  > input {
+    padding-left: 1.75em;
+    padding-right: 0em;
+  }
+}
+
 .attending, .staying {
   display: none;
 }
@@ -487,6 +507,21 @@ label {
   ul {
     list-style-type: none;
   }
+
+  .error-message {
+    display: block;
+  	padding: 0.375em 0.25em;
+  	margin-top: 0;
+  	margin-bottom: 1em;
+  	font-size: 0.75em;
+  	font-weight: bold;
+  	background: $error_color;
+  	color: white;
+
+    &:empty {
+      display: none;
+    }
+  }
 }
 .gift-choice, .rsvp-attendance, .nights-onsite {
   label {
@@ -507,8 +542,7 @@ label {
 .checkbox-line-wrapper {
   display: flex;
   align-items: center;
-  // input, .checkbox{
-  .checkbox-item {
+  .checkbox, .checkbox-item {
     flex-shrink: 0;
     margin: 0.2em;
     &[type="text"] {
@@ -680,28 +714,34 @@ label.error {
 /* Navigation */
 
 .top-bar {
+  background-color: $side_nav_background;
+  color: $side_nav_select_color;
 	position: relative;
 	top: 0;
 	width: 100%;
 	z-index: 997;
 	text-align: left;
-}
-.top-bar .name {
-	color:$side_nav_select_color;
-	font-weight: bold;
-	line-height: 3em;
-	padding-left: 1em;
-	margin-right: 1em;
-}
-.top-bar-section ul li {
-	border-bottom: 1px dotted $small_nav_border_color;
-}
-.top-bar-section ul li > a {
-	background: $small_nav_background_color;
-	font-weight: normal;
-}
-.top-bar-section ul li:first-child {
-	display: none;
+
+  .name {
+  	// color:$side_nav_select_color;
+  	font-weight: bold;
+  	line-height: 3em;
+  	padding-left: 1em;
+  	margin-right: 1em;
+  }
+
+  .top-bar-section ul {
+    li{
+    	border-bottom: 1px dotted $small_nav_border_color;
+      > a {
+      	font-weight: normal;
+      }
+
+      &:first-child {
+        display: none;
+      }
+    }
+  }
 }
 
 /*-----------------------------------------------------------------------------------*/

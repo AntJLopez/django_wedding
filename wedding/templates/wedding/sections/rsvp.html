@@ -9,16 +9,14 @@
       <fieldset class="rsvp-attendance">
         <legend>Will you be attending?</legend>
         <div class="large-6 columns">
-          <label for="accept">
+          <label for="accept" class="accept">
             <input name="attendance" type="radio" id="accept" style="display:none;" value=true required>
-            <span class="custom radio accept"></span>
             <span class="radio-label">Absolutely!</span>
           </label>
         </div>
         <div class="large-6 columns">
-          <label for="decline">
+          <label for="decline" class="decline">
             <input name="attendance" type="radio" id="decline" style="display:none;" value=false required>
-            <span class="custom radio decline"></span>
             <span class="radio-label">Sadly, no.</span>
           </label>
         </div>
@@ -26,7 +24,7 @@
       <fieldset class="rsvp-party attending">
         <legend>Who will be attending?</legend>
         {% for member in guest.party %}
-          <div class="checkbox-line-wrapper">
+          <div class="checkbox-line-wrapper columns">
             <input
               type="checkbox"
               class="checkbox-item"
@@ -38,13 +36,15 @@
                   class="checkbox-item"
                   name="unnamed_first_{{ member.id }}"
                   id="unnamed_first_{{ member.id }}"
-                  value="Guest First Name">
+                  value="Plus-One First Name"
+                  onfocus="this.value=''">
                 <input
                   type="text"
                   class="checkbox-item"
                   name="unnamed_last_{{ member.id }}"
                   id="unnamed_last_{{ member.id }}"
-                  value="Guest Last Name">
+                  value="Plus-One Last Name"
+                  onfocus="this.value=''">
             {% else %}
               <span class="checkbox-item">{{ member }}</span>
             {% endif %}
@@ -54,38 +54,44 @@
       <fieldset class="nights-onsite attending">
         <legend>How many nights will you be spending onsite?<br />(see above for costs)</legend>
         <div class="small-12 large-4 columns">
-          <label for="onsite_0">
+          <label for="onsite_0" class="onsite_0">
             <svg viewBox="0 0 100 100" class="icon">
               <use xlink:href="#zero" />
             </svg>
             <input type="radio" name="nights_onsite" id="onsite_0" value=0 required>
-            <span class="custom radio onsite_0"></span>
             <span class="radio-label">I'm staying elsewhere.</span>
           </label>
         </div>
         <div class="small-12 large-4 columns">
-          <label for="onsite_1">
+          <label for="onsite_1" class="onsite_1">
             <svg viewBox="0 0 100 100" class="icon">
               <use xlink:href="#one" />
             </svg>
             <input type="radio" name="nights_onsite" id="onsite_1" value=1 required>
-            <span class="custom radio onsite_1"></span>
             <span class="radio-label">I won't want to leave.</span>
           </label>
         </div>
         <div class="small-12 large-4 columns">
-          <label for="onsite_2">
+          <label for="onsite_2" class="onsite_2">
             <svg viewBox="0 0 100 100" class="icon">
               <use xlink:href="#two" />
             </svg>
             <input type="radio" name="nights_onsite" id="onsite_2" value=2 required>
-            <span class="custom radio onsite_2"></span>
             <span class="radio-label">I won't miss a thing.</span>
           </label>
         </div>
       </fieldset>
       <fieldset class="rsvp-pay staying">
         <legend>How would you like to pay?</legend>
+        <div class="columns">
+          <div class="fieldWrapper">
+            <label for="rsvp-cc">
+            </label>
+            <div class="fieldWrapper" id="rsvp-cc">
+            </div>
+            <span id="rsvp-cc-errors" class="error-message"></span>
+          </div>
+        </div>
       </fieldset>
       <fieldset class="rsvp-activities attending">
         <legend>Which of the below activities interest you, if any?</legend>

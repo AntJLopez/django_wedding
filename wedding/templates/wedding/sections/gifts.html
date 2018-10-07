@@ -13,7 +13,7 @@
       <legend>What would you like to give?</legend>
       <ul class="small-block-grid-1 large-block-grid-3 block-grid">
         <li>
-          <label for="yard" class="block-logo">
+          <label for="landscape_yard" class="block-logo">
             <svg viewBox="0 0 100 100" class="icon">
               <use xlink:href="#flowers" />
             </svg>
@@ -24,7 +24,7 @@
           </a>
         </li>
         <li>
-          <label for="kitchen" class="block-logo">
+          <label for="update_kitchen" class="block-logo">
             <svg viewBox="0 0 100 100" class="icon">
               <use xlink:href="#kitchen" />
             </svg>
@@ -35,7 +35,7 @@
           </a>
         </li>
         <li>
-          <label for="basement" class="block-logo">
+          <label for="finish_basement" class="block-logo">
             <svg viewBox="0 0 100 100" class="icon">
               <use xlink:href="#sofa" />
             </svg>
@@ -49,12 +49,13 @@
 		</fieldset>
     <fieldset class="amount">
       <legend>How much would you like to give?</legend>
-      <div class="columns">
-        <div class="fieldWrapper">
+      <div class="large-4 large-centered columns">
+        <div class="fieldWrapper input-icon">
           <label for="{{ gift_form.amount.id_for_label }}">
             Amount
           </label>
           {{ gift_form.amount }}
+          <i>$</i>
       </div>
       </div>
     </fieldset>
@@ -99,9 +100,7 @@
           </label>
           <div class="fieldWrapper" id="gift-cc">
           </div>
-          <div id="gift-cc-errors" role="alert">
-          </div>
-        </div>
+          <span id="gift-cc-errors" class="error-message"></span>
       </div>
     </fieldset>
 

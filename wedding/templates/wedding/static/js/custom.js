@@ -62,22 +62,43 @@ $(document).ready(() => {
   /*  Stripe Configuration
   /*-----------------------------------------------------------------------------------*/
 
-  const style = {
+  const stripeStyle = {
     base: {
       fontSize: '16px',
       color: '#32325d',
     },
   };
 
-  const giftCC = elements.create('card', { style });
-  giftCC.mount('#gift-cc');
+  const creditCard = elements.create('card', { stripeStyle });
+  creditCard.mount('#gift-cc');
+  let creditCardSection = 'Gifts';
 
-  giftCC.addEventListener('change', ({ error }) => {
-    const displayError = $('#gift-cc-errors');
+  creditCard.addEventListener('change', ({ error }) => {
+    let displayError;
+    if (creditCardSection === 'Gifts') {
+      displayError = $('#gift-cc-errors');
+    } else {
+      displayError = $('#rsvp-cc-errors');
+    }
     if (error) {
       displayError.text(error.message);
     } else {
-      displayError.text(error.message);
+      displayError.text('');
+    }
+  });
+
+  $(window).scroll(() => {
+    const section = $('.side-nav li.active a').first().text();
+    if (section === 'Gifts' && creditCardSection !== 'Gifts') {
+      creditCard.unmount();
+      $('#rsvp-cc-errors').text('');
+      creditCard.mount('#gift-cc');
+      creditCardSection = 'Gifts';
+    } else if (section === 'RSVP' && creditCardSection !== 'RSVP') {
+      creditCard.unmount();
+      $('#gift-cc-errors').text('');
+      creditCard.mount('#rsvp-cc');
+      creditCardSection = 'RSVP';
     }
   });
 
@@ -91,7 +112,7 @@ $(document).ready(() => {
 
     formID.on('submit', async (e) => {
       e.preventDefault();
-      const { token, error } = await stripe.createToken(giftCC);
+      const { token, error } = await stripe.createToken(creditCard);
       const errorElement = $('#gift-cc-errors');
 
       if (error) {
@@ -109,7 +130,7 @@ $(document).ready(() => {
             if ($.isEmptyObject(data.errors)) {
               $('#gift-display').text('Success!').addClass('message-panel');
               formID.trigger('reset');
-              giftCC.clear();
+              creditCard.clear();
             }
           },
         );
@@ -123,41 +144,52 @@ $(document).ready(() => {
   /*-----------------------------------------------------------------------------------*/
 
   function rsvpFormSubmit() {
-    // this is the id of the form
-    const formID = $('#js-form');
+    const formID = $('#rsvp_form');
+    const url = formID.attr('action'); // eslint-disable-line
 
-    // submits form with ajax method
-    formID.on('submit', () => {
-      $.ajax({
-        url: 'mailer.php',
-        type: 'POST',
-        data: formID.serialize(), // serializes the form's elements.
-        success(data) {
-          $('.js-display')
-            .addClass('message-panel')
-            .html(data); // show response from the php script.
-        },
-      });
-
-      return false; // avoid to execute the actual submit of the f
-    });
-
-    // Show/Hide RSVP Menu selection on accept/decline
-    $('.decline').on('click', () => {
-      $('.attending').fadeOut();
-      $('.staying.').fadeOut();
-    });
-    $('.accept').on('click', () => {
-      $('.attending').fadeIn();
-    });
-
-    $('.onsite_0').on('click', () => {
-      $('.staying').fadeOut();
-    });
-    $('.onsite_1, .onsite_2').on('click', () => {
-      $('.staying').fadeIn();
-    });
+    // formID.on('submit', async (e) => {
+    //   e.preventDefault();
+    //   // const { token, error } = await stripe.createToken(rsvpCC);
+    //   // const errorElement = $('#rsvp-cc-errors');
+    //
+    //   if (false) { // eslint-disable-line no-constant-condition
+    //     // errorElement.text(error.message);
+    //   } else {
+    //     // errorElement.text('');
+    //
+    //     const formData = formID.serializeArray();
+    //     // formData.push({ name: 'stripe_token', value: token.id });
+    //
+    //     $.post(
+    //       url,
+    //       formData,
+    //       (data) => { // eslint-disable-line
+    //         if ($.isEmptyObject(data.errors)) {
+    //           formID.trigger('reset');
+    //           rsvpCC.clear();
+    //         }
+    //       },
+    //     );
+    //   }
+    // });
   }
+  // Show/Hide RSVP Menu selection on accept/decline
+  $('.decline').on('click', () => {
+    $('.attending').fadeOut();
+    $('.staying.').fadeOut();
+  });
+  $('.accept').on('click', () => {
+    $('.attending').fadeIn();
+  });
+
+  $('.onsite_0').on('click', () => {
+    console.log('NOT STAYING');
+    $('.staying').fadeOut();
+  });
+  $('.onsite_1, .onsite_2').on('click', () => {
+    console.log('STAYING');
+    $('.staying').fadeIn();
+  });
   rsvpFormSubmit();
 
   /*-----------------------------------------------------------------------------------*/
