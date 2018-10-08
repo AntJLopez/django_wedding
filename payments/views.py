@@ -28,9 +28,12 @@ def make_gift(request):
                 description=str(gift.category)
             )
             gift.stripe_id = charge.id
-        except stripe.error.CardError as ce:
+        except stripe.error.CardError as card_error:
             # There was an error processing the credit card
-            response['errors']['gift_cc'] = [ce]
+            card_error = str(card_error)
+            if 'Request req' in card_error:
+                card_error = card_error.split(':', 1)[1].strip()
+            response['errors']['gift_cc'] = [card_error]
         else:
             # Create the payment object and save it
             if cd['guest_id']:

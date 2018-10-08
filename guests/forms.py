@@ -1,7 +1,7 @@
 from django import forms
-from django.core.exceptions import ValidationError  # noqa
 from .models import Guest, RSVP, Activity
 from payments.models import Payment, PaymentCategory  # noqa
+from pprint import pprint  # noqa
 
 
 class GuestForm(forms.ModelForm):
@@ -34,11 +34,12 @@ class GuestForm(forms.ModelForm):
 
 
 class RSVPForm(forms.ModelForm):
+    guest_id = forms.IntegerField()
+    stripe_token = forms.CharField(max_length=255, required=False)
+
     class Meta:
         model = RSVP
-        fields = [
-            'attending', 'attending_kuwait', 'nights_onsite', 'payment',
-            'message']
+        fields = ['attending', 'nights_onsite', 'payment', 'message']
 
     activities = forms.ModelMultipleChoiceField(
         queryset=Activity.objects.all(),
@@ -48,6 +49,7 @@ class RSVPForm(forms.ModelForm):
 
     guests = forms.ModelMultipleChoiceField(
         queryset=Guest.objects.all(),
+        required=False,
         help_text='Select guests in RSVP')
 
     def __init__(self, *args, **kwargs):
@@ -64,6 +66,34 @@ class RSVPForm(forms.ModelForm):
             initial['guests'] = [
                 g.pk for g in kwargs['instance'].guests.all()]
         forms.ModelForm.__init__(self, *args, **kwargs)
+
+    def clean_attending(self):
+        if 'attending' not in self.data:
+            raise forms.ValidationError('Will you be attending?')
+        return self.cleaned_data['attending']
+
+    def clean_guests(self):
+        guests = self.cleaned_data['guests']
+        if not guests:
+            lead = Guest.objects.get(pk=self.data['guest_id'])
+            guests = [guest for guest in lead.party()]
+        return guests
+
+    def clean(self):
+        cd = super().clean()  # noqa
+        if cd.get('attending') and cd.get('nights_onsite') is None:
+            print(cd.get('attending'))
+            print(cd.get('nights_onsite'))
+            self.add_error(
+                'nights_onsite',
+                'How many nights (if any) do you plan to stay onsite?'
+            )
+        if (cd.get('attending') and cd.get('nights_onsite')
+                and not cd.get('stripe_token')):
+            self.add_error(
+                'rsvp_cc',
+                ('We need to pay the venue for your stay; '
+                 'please fill out your credit card information'))
 
     def save(self, commit=True):
         # Get the unsaved Activity instance

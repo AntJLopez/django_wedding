@@ -2,21 +2,22 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="small-12 large-8 large-centered columns wrapper">
+<div class="small-12 large-8 large-centered columns wrapper rsvp-section">
   {% if guest %}
-    <form data-abide method="POST" class="rsvp-form custom" action="#" id="rsvp_form">
+    <form data-abide method="POST" class="rsvp-form custom" action="{% url 'rsvp' %}" id="rsvp_form">
       {% csrf_token %}
+      <input type="hidden" id="guest_id" name="guest_id" value="{{ guest.id }}">
       <fieldset class="rsvp-attendance">
         <legend>Will you be attending?</legend>
         <div class="large-6 columns">
           <label for="accept" class="accept">
-            <input name="attendance" type="radio" id="accept" style="display:none;" value=true required>
+            <input name="attending" type="radio" id="accept" style="display:none;" value=true required>
             <span class="radio-label">Absolutely!</span>
           </label>
         </div>
         <div class="large-6 columns">
           <label for="decline" class="decline">
-            <input name="attendance" type="radio" id="decline" style="display:none;" value=false required>
+            <input name="attending" type="radio" id="decline" style="display:none;" value=false required>
             <span class="radio-label">Sadly, no.</span>
           </label>
         </div>
@@ -29,6 +30,7 @@
               type="checkbox"
               class="checkbox-item"
               name="guests"
+              value="{{ member.id }}"
               id="attendance_{{ member.id }}">
             {% if member.unnamed %}
                 <input
@@ -89,7 +91,7 @@
             </label>
             <div class="fieldWrapper" id="rsvp-cc">
             </div>
-            <span id="rsvp-cc-errors" class="error-message"></span>
+            <span id="rsvp-cc-errors" class="error-message rsvp-errors"></span>
           </div>
         </div>
       </fieldset>
@@ -110,9 +112,15 @@
       </button>
     </form>
   {% else %}
-    <p>
-      Please log in with the unique code from your invitation to RSVP.
-    </p>
+  <p class="content-block">
+    Please use the unique code from your invitation to RSVP.
+    <br />
+    If you are confused,
+    <a href="mailto:info@tonyhaya.com?Subject=RSVP%20Question">
+      email us
+    </a>
+    and we'll help.
+  </p>
   {% endif %}
 </div>
 {% endblock %}

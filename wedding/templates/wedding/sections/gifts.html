@@ -46,6 +46,9 @@
           </a>
         </li>
       </ul>
+      <div class="columns">
+        <span id="gift-category-errors" class="error-message gift-errors"></span>
+      </div>
 		</fieldset>
     <fieldset class="amount">
       <legend>How much would you like to give?</legend>
@@ -56,7 +59,8 @@
           </label>
           {{ gift_form.amount }}
           <i>$</i>
-      </div>
+        </div>
+        <span id="gift-amount-errors" class="error-message gift-errors"></span>
       </div>
     </fieldset>
 
@@ -89,6 +93,9 @@
             {{ gift_form.email }}
           </div>
         </div>
+        <div class="columns">
+          <span id="gift-contact-errors" class="error-message gift-errors"></span>
+        </div>
       </fieldset>
     {% endif %}
 
@@ -100,7 +107,7 @@
           </label>
           <div class="fieldWrapper" id="gift-cc">
           </div>
-          <span id="gift-cc-errors" class="error-message"></span>
+          <span id="gift-cc-errors" class="error-message gift-errors"></span>
       </div>
     </fieldset>
 
@@ -111,6 +118,5 @@
       <span class="btn-label">Make a Gift</span>
     </button>
   </form>
-
 </div>
 {% endblock %}

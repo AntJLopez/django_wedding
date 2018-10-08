@@ -33,7 +33,7 @@ class RSVP(models.Model):
     updated = models.DateTimeField(auto_now=True)
     attending = models.BooleanField()
     attending_kuwait = models.BooleanField(default=False)
-    nights_onsite = models.PositiveSmallIntegerField(default=0)
+    nights_onsite = models.PositiveSmallIntegerField(blank=True, default=0)
     activities = models.ManyToManyField(Activity, related_name='groups')
     payment = models.ForeignKey(
         'payments.Payment', blank=True, null=True, on_delete=models.SET_NULL)

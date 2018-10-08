@@ -7,7 +7,7 @@ $(document).ready(() => {
   /*-----------------------------------------------------------------------------------*/
 
   function smoothScroll() {
-    const formTarget = $('.js-form'); // Assign this class to corresponding section on Index.html    $('.nav').onePageNav({
+    const formTarget = $('.rsvp-section');
 
     $('.nav').onePageNav({
       filter: ':not(.external)',
@@ -91,16 +91,31 @@ $(document).ready(() => {
     const section = $('.side-nav li.active a').first().text();
     if (section === 'Gifts' && creditCardSection !== 'Gifts') {
       creditCard.unmount();
-      $('#rsvp-cc-errors').text('');
+      $('.rsvp-error-child').remove();
       creditCard.mount('#gift-cc');
       creditCardSection = 'Gifts';
-    } else if (section === 'RSVP' && creditCardSection !== 'RSVP') {
+    } else if ($('#rsvp-cc').length > 0 && section === 'RSVP'
+                                        && creditCardSection !== 'RSVP') {
       creditCard.unmount();
-      $('#gift-cc-errors').text('');
+      $('.gift-error-child').remove();
       creditCard.mount('#rsvp-cc');
       creditCardSection = 'RSVP';
     }
   });
+
+  /*-----------------------------------------------------------------------------------*/
+  /*  Form Helper Functons
+  /*-----------------------------------------------------------------------------------*/
+
+  function populateErrors(errorField, errorArray, errorClass) {
+    let i = 0;
+    for (; i < errorArray.length; i += 1) {
+      const newErrorField = errorField.clone();
+      newErrorField.addClass(errorClass);
+      newErrorField.text(errorArray[i]);
+      errorField.after(newErrorField);
+    }
+  }
 
   /*-----------------------------------------------------------------------------------*/
   /*  Gift Form
@@ -126,11 +141,28 @@ $(document).ready(() => {
         $.post(
           url,
           formData,
-          (data) => { // eslint-disable-line
+          (data) => {
+            // Clear all existing errors
+            $('.gift-error-child').remove();
             if ($.isEmptyObject(data.errors)) {
-              $('#gift-display').text('Success!').addClass('message-panel');
+              $('#gift-success').foundation('reveal', 'open');
               formID.trigger('reset');
               creditCard.clear();
+            } else {
+              Object.keys(data.errors).forEach((key) => {
+                function pushErrors(errorField) {
+                  populateErrors(errorField, data.errors[key], 'gift-error-child');
+                }
+                if (key === 'first_name' || key === 'last_name' || key === 'email') {
+                  pushErrors($('#gift-contact-errors'));
+                } else if (key === 'amount') {
+                  pushErrors($('#gift-amount-errors'));
+                } else if (key === 'category_name') {
+                  pushErrors($('#gift-category-errors'));
+                } else if (key === 'gift_cc') {
+                  pushErrors($('#gift-cc-errors'));
+                }
+              });
             }
           },
         );
@@ -147,49 +179,61 @@ $(document).ready(() => {
     const formID = $('#rsvp_form');
     const url = formID.attr('action'); // eslint-disable-line
 
-    // formID.on('submit', async (e) => {
-    //   e.preventDefault();
-    //   // const { token, error } = await stripe.createToken(rsvpCC);
-    //   // const errorElement = $('#rsvp-cc-errors');
-    //
-    //   if (false) { // eslint-disable-line no-constant-condition
-    //     // errorElement.text(error.message);
-    //   } else {
-    //     // errorElement.text('');
-    //
-    //     const formData = formID.serializeArray();
-    //     // formData.push({ name: 'stripe_token', value: token.id });
-    //
-    //     $.post(
-    //       url,
-    //       formData,
-    //       (data) => { // eslint-disable-line
-    //         if ($.isEmptyObject(data.errors)) {
-    //           formID.trigger('reset');
-    //           rsvpCC.clear();
-    //         }
-    //       },
-    //     );
-    //   }
-    // });
-  }
-  // Show/Hide RSVP Menu selection on accept/decline
-  $('.decline').on('click', () => {
-    $('.attending').fadeOut();
-    $('.staying.').fadeOut();
-  });
-  $('.accept').on('click', () => {
-    $('.attending').fadeIn();
-  });
+    formID.on('submit', async (e) => {
+      e.preventDefault();
 
-  $('.onsite_0').on('click', () => {
-    console.log('NOT STAYING');
-    $('.staying').fadeOut();
-  });
-  $('.onsite_1, .onsite_2').on('click', () => {
-    console.log('STAYING');
-    $('.staying').fadeIn();
-  });
+      const formData = formID.serializeArray();
+      const data = {};
+      $(formData).each((index, obj) => {
+        data[obj.name] = obj.value;
+      });
+      data.attending = (data.attending === 'true');
+      data.nights_onsite = parseInt(data.nights_onsite, 10);
+
+      if (data.attending && data.nights_onsite > 0) {
+        const { token, error } = await stripe.createToken(creditCard);
+        const errorElement = $('#rsvp-cc-errors');
+
+        if (error) {
+          errorElement.text(error.message);
+          return;
+        }
+        errorElement.text('');
+        formData.push({ name: 'stripe_token', value: token.id });
+      }
+
+      $.post(
+        url,
+        formData,
+        (data) => { // eslint-disable-line
+          if ($.isEmptyObject(data.errors)) {
+            $('#rsvp-success').foundation('reveal', 'open');
+            formID.trigger('reset');
+            creditCard.clear();
+          } else {
+            // formID.trigger('reset');
+            // $('.checkbox').removeClass('checked');
+          }
+        },
+      );
+    });
+
+    // Show/Hide RSVP Menu selection on accept/decline
+    $('.decline').on('click', () => {
+      $('.attending').fadeOut();
+      $('.staying').fadeOut();
+    });
+    $('.accept').on('click', () => {
+      $('.attending').fadeIn();
+    });
+
+    $('.onsite_0').on('click', () => {
+      $('.staying').fadeOut();
+    });
+    $('.onsite_1, .onsite_2').on('click', () => {
+      $('.staying').fadeIn();
+    });
+  }
   rsvpFormSubmit();
 
   /*-----------------------------------------------------------------------------------*/
