@@ -1,7 +1,7 @@
 import os
 from .local_settings import (  # noqa
     DATABASES, SECRET_KEY, ALLOWED_HOSTS, DEBUG, STRIPE_PUBLIC_KEY,
-    STRIPE_SECRET_KEY)
+    STRIPE_SECRET_KEY, STATIC_ROOT, MEDIA_ROOT)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -113,12 +113,10 @@ STATICFILES_FINDERS = [
     'sass_processor.finders.CssFinder',
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 SASS_PROCESSOR_ROOT = STATIC_ROOT
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
