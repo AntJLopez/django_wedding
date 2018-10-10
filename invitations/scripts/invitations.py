@@ -130,8 +130,8 @@ def generate(starting=0):
             sheet.save(f'{filename}.svg')
             subprocess.call([
                 'inkscape',
-                '-E',
-                f'{filename}.eps',
+                '-A',
+                f'{filename}.pdf',
                 f'{filename}.svg'])
             os.remove(f'{filename}.svg')
             subprocess.call([
@@ -139,9 +139,9 @@ def generate(starting=0):
                 '-dt',
                 '-f',
                 'dxf:-polyaslines -mm',
-                f'{filename}.eps',
+                f'{filename}.pdf',
                 f'{filename}.dxf'])
-            os.remove(f'{filename}.eps')
+            os.remove(f'{filename}.pdf')
 
 
 def run():
