@@ -81,11 +81,12 @@ def test():
     invite2.write('invitations/images/invite2.svg')
 
 
-def generate(starting=0):
+def invitations(max=None):
     invited_leads = Guest.objects.leads().invited().order_by(
         'family', 'percentile')
-    invite_sheet = []
-    file_counter = 0
+    if max:
+        invited_leads = itertools.islice(invited_leads, max)
+
     for guest in invited_leads:
         invite = Invitation()
         party = len(guest.party())
@@ -107,43 +108,91 @@ def generate(starting=0):
             line += ' & Family'
             invite.invitees = line
 
-        invite_sheet.append(str(invite))
-        if len(invite_sheet) >= 4:
-            file_counter += 1
-            files = [svg.transform.fromstring(inv) for inv in invite_sheet]
-            invite_sheet = []
+        yield str(invite)
 
+
+def chunks(iterable, size=10):
+    iterator = iter(iterable)
+    for first in iterator:
+        yield itertools.chain([first], itertools.islice(iterator, size - 1))
+
+
+def svg_to_pdf(filename, clean_up=True):
+    subprocess.call([
+        'inkscape',
+        '-A',
+        f'{filename}.pdf',
+        f'{filename}.svg'])
+    if clean_up:
+        os.remove(f'{filename}.svg')
+
+
+def pdf_to_dxf(filename, clean_up=True):
+    subprocess.call([
+        'pstoedit',
+        '-dt',
+        '-f',
+        'dxf:-mm',
+        f'{filename}.pdf',
+        f'{filename}.dxf'])
+    if clean_up:
+        os.remove(f'{filename}.pdf')
+
+
+def pdf_to_ai(filename, clean_up=True):
+    subprocess.call([
+        'pstoedit',
+        '-dt',
+        '-f',
+        'ps2ai',
+        f'{filename}.pdf',
+        f'{filename}.ai'])
+    if clean_up:
+        os.remove(f'{filename}.pdf')
+
+
+def mm2px(mm):
+    return mm * 72 / Decimal('25.4') * Decimal('1.25')
+
+
+def px2mm(px):
+    return px / Decimal('1.25') * Decimal('25.4') / 72
+
+
+def generate_invitation_sheets(group_size=4, vertical=False):
+    for c, invite_group in enumerate(chunks(invitations(), group_size)):
+        files = [svg.transform.fromstring(inv) for inv in invite_group]
+
+        template_width = Decimal(files[0].width.strip('m'))
+        template_height = Decimal(files[0].height.strip('m'))
+
+        if vertical:
             sheet = svg.transform.SVGFigure(
-                files[0].width,
-                f'{sum(Decimal(f.height.strip("m")) for f in files)}mm')
+                f'{template_width}mm',
+                f'{template_height * len(files)}mm')
+        else:
+            sheet = svg.transform.SVGFigure(
+                f'{2 * template_width}mm',
+                f'{2 * template_height}mm',
+            )
 
-            svgs = [f.getroot() for f in files]
-            total_height = 0
-            for n, svg_file in enumerate(svgs):
-                svg_file.moveto(0, total_height)
-                height = Decimal(files[n].height.strip("m"))
-                height *= 72 / Decimal('25.4') * Decimal('1.25')
-                total_height += height
+        svgs = [f.getroot() for f in files]
+        for n, svg_file in enumerate(svgs):
+            if vertical:
+                svg_file.moveto(0, mm2px(n * template_height))
+            else:
+                x = n // 2 * template_width
+                y = n % 2 * template_height
+                svg_file.moveto(mm2px(x), mm2px(y))
+        sheet.append(svgs)
 
-            sheet.append(svgs)
-            filename = f'invitations/images/invite_sheet_{file_counter:03}'
-            sheet.save(f'{filename}.svg')
-            subprocess.call([
-                'inkscape',
-                '-A',
-                f'{filename}.pdf',
-                f'{filename}.svg'])
-            os.remove(f'{filename}.svg')
-            subprocess.call([
-                'pstoedit',
-                '-dt',
-                '-f',
-                'dxf:-polyaslines -mm',
-                f'{filename}.pdf',
-                f'{filename}.dxf'])
-            os.remove(f'{filename}.pdf')
+        filename = f'invitations/images/invite_sheet_{c + 1:03}'
+        sheet.save(f'{filename}.svg')
+        svg_to_pdf(filename)
+        pdf_to_dxf(filename)
 
 
 def run():
-    print('====================================================')
-    generate()
+    generate_invitation_sheets(group_size=2, vertical=True)
+    # svg_to_pdf('invitations/images/cut_template_sheet')
+    # pdf_to_dxf('invitations/images/cut_template_sheet')

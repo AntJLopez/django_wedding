@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404  # noqa
 from django.contrib.auth.decorators import login_required  # noqa
 from .local_settings import GOOGLE_API_KEY, STRIPE_PUBLIC_KEY
-from guests.models import Guest
+from guests.models import Guest, Activity
 from guests.forms import RSVPForm
 from payments.forms import GiftForm
 
@@ -45,6 +45,7 @@ def home(request, gift_form=GiftForm(), rsvp_form=RSVPForm()):
         'stripe_public_key': STRIPE_PUBLIC_KEY,
         'gift_form': gift_form,
         'rsvp_form': rsvp_form,
+        'activities': Activity.objects.all()
     }
     try:
         guest = Guest.objects.get(id=request.session['guest'])

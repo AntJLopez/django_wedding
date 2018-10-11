@@ -97,7 +97,22 @@
       </fieldset>
       <fieldset class="rsvp-activities attending">
         <legend>Which of the below activities interest you, if any?</legend>
-        {{ rsvp_form.activities }}
+
+        <div class="row">
+        {% for activity in activities %}
+          <div class="checkbox-line-wrapper small-12 small-centered medium-6 medium-centered large-4 columns">
+            <input
+              type="checkbox"
+              class="checkbox-item"
+              name="activities"
+              value="{{ activity.id }}"
+              id="activity_{{ activity.id }}">
+              <span class="checkbox-item">{{ activity.name }}</span>
+          </div>
+        {% endfor %}
+        </div>
+
+        <!-- {{ rsvp_form.activities }} -->
       </fieldset>
       <fieldset class="rsvp-message">
         <legend>Is there a message you'd like to share with us?</legend>

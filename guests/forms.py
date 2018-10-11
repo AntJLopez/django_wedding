@@ -74,9 +74,18 @@ class RSVPForm(forms.ModelForm):
 
     def clean_guests(self):
         guests = self.cleaned_data['guests']
+        attending = self.data['attending']
+        # If no guests were checked
         if not guests:
-            lead = Guest.objects.get(pk=self.data['guest_id'])
-            guests = [guest for guest in lead.party()]
+            # And the RSVP is attending
+            if attending:
+                # We need to know which guests are attending
+                raise forms.ValidationError('Who will be attending?')
+            # And the RSVP is declined
+            else:
+                # Nobody's coming; include all guests in party
+                lead = Guest.objects.get(pk=self.data['guest_id'])
+                guests = [guest for guest in lead.party()]
         return guests
 
     def clean(self):

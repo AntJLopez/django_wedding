@@ -10,9 +10,9 @@ INVITED_THRESHOLD = Decimal('0.40')
 
 class Activity(models.Model):
     def __str__(self):
-        return self.activity
+        return self.name
 
-    activity = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     class Meta:
         verbose_name_plural = 'Activities'

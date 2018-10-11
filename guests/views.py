@@ -78,12 +78,19 @@ def test_rsvp_complete(request):
 def rsvp(request):
     response = {'errors': {}}
     form = RSVPForm(request.POST)
-    pprint(form.data)
 
     if form.is_valid():
-        pprint(form.data)
-        pprint(form.cleaned_data)
         cd = form.cleaned_data
+
+        for key, value in request.POST.items():
+            words = key.split('_')
+            if words[0] == 'unnamed':
+                guest = Guest.objects.get(pk=int(words[-1]))
+                if words[1] == 'first':
+                    guest.first_name = value
+                elif words[1] == 'last':
+                    guest.last_name = value
+                guest.save()
 
         guest = Guest.objects.get(id=cd['guest_id'])
         if cd['attending'] and cd['nights_onsite'] > 0:
@@ -100,8 +107,8 @@ def rsvp(request):
                 charge = stripe.Charge.create(**stripe_kwargs)
                 payment = Payment(
                     amount=amount,
-                    payer=Payer.objects.filter(guest=guest).first(),
-                    category=PaymentCategory.objects.filter(name='Lodging'),
+                    payer=Payer.objects.get_or_create(guest=guest)[0],
+                    category=PaymentCategory.objects.get(name='Lodging'),
                     stripe_id=charge.id)
                 payment.save()
             except stripe.error.CardError as card_error:
