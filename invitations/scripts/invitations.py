@@ -193,6 +193,6 @@ def generate_invitation_sheets(group_size=4, vertical=False):
 
 
 def run():
-    generate_invitation_sheets(group_size=2, vertical=True)
+    generate_invitation_sheets(group_size=1, vertical=True)
     # svg_to_pdf('invitations/images/cut_template_sheet')
     # pdf_to_dxf('invitations/images/cut_template_sheet')
