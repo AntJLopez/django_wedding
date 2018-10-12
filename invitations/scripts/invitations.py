@@ -82,6 +82,8 @@ def test():
 
 
 def invitations(max=None):
+    MAX_LINE_LENGTH = 28
+
     invited_leads = Guest.objects.leads().invited().order_by(
         'family', 'percentile')
     if max:
@@ -97,15 +99,34 @@ def invitations(max=None):
         if party == 1:
             invite.invitees = str(guest)
         elif party == 2:
-            line = f'{guest} & '
             plus_one = guest.party()[1]
-            line += 'Guest' if plus_one.unnamed else plus_one.first_name
-            invite.invitees = line
+            if plus_one.unnamed():
+                line = f'{guest} & Guest'
+                if len(line) > MAX_LINE_LENGTH:
+                    line = f'{guest.first_name} & Guest'
+                invite.invitees = line
+            elif guest.last_name == plus_one.last_name:
+                first_names = f'{guest.first_name} & {plus_one.first_name}'
+                line = f'{first_names} {guest.last_name}'
+                if len(line) > MAX_LINE_LENGTH:
+                    line = first_names
+                invite.invitees = line
+            else:
+                line = f'{guest} & {plus_one}'
+                if len(line) > MAX_LINE_LENGTH:
+                    line = f'{guest} & {plus_one.first_name}'
+                if len(line) > MAX_LINE_LENGTH:
+                    line = f'{guest.first_name} & {plus_one.first_name}'
+                if len(line) > MAX_LINE_LENGTH:
+                    line = f'{guest.first_name} & Guest'
+                invite.invitees = line
         else:
             line = f'{guest.first_name}, '
             plus_one = guest.party()[1]
-            line += 'Guest' if plus_one.unnamed else plus_one.first_name
+            line += 'Guest' if plus_one.unnamed() else plus_one.first_name
             line += ' & Family'
+            if len(line) > MAX_LINE_LENGTH:
+                line = f'{guest.first_name} & Family'
             invite.invitees = line
 
         yield str(invite)
@@ -135,8 +156,8 @@ def pdf_to_dxf(filename, clean_up=True):
         'dxf:-mm',
         f'{filename}.pdf',
         f'{filename}.dxf'])
-    if clean_up:
-        os.remove(f'{filename}.pdf')
+    # if clean_up:
+    #     os.remove(f'{filename}.pdf')
 
 
 def pdf_to_ai(filename, clean_up=True):
