@@ -670,6 +670,12 @@ label.error {
 /*-----------------------------------------------------------------------------------*/
 /*	5.	Image Gallery
 /*-----------------------------------------------------------------------------------*/
+.slides {
+  img {
+    max-height: 100px;
+    width: auto;
+  }
+}
 
 .carousel li {
 	position: relative;
@@ -678,6 +684,7 @@ label.error {
 	width: 100%;
 }
 .carousel img {
+  // max-height: 100px;
 	max-width: 100%;
 	height: auto;
 }

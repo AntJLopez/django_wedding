@@ -97,6 +97,54 @@ class Guest(models.Model):
             party.append(child)
         return [guest for guest in party if guest.invited()]
 
+    def address(self):
+        if self.country == 'US':
+            lines = []
+            lines.append(self.thoroughfare)
+            if self.premise:
+                lines.append(self.premise)
+            line = (f'{self.locality}, {self.administrative_area} ')
+            line += self.postal_code
+            lines.append(line)
+            return lines
+        return None
+
+    def party_line(self, max_line_length=28):
+        party = len(self.party())
+
+        if party == 1:
+            return str(self)
+        elif party == 2:
+            plus_one = self.party()[1]
+            if plus_one.unnamed():
+                line = f'{self} & Guest'
+                if len(line) > max_line_length:
+                    line = f'{self.first_name} & Guest'
+                return line
+            elif self.last_name == plus_one.last_name:
+                first_names = f'{self.first_name} & {plus_one.first_name}'
+                line = f'{first_names} {self.last_name}'
+                if len(line) > max_line_length:
+                    line = first_names
+                return line
+            else:
+                line = f'{self} & {plus_one}'
+                if len(line) > max_line_length:
+                    line = f'{self} & {plus_one.first_name}'
+                if len(line) > max_line_length:
+                    line = f'{self.first_name} & {plus_one.first_name}'
+                if len(line) > max_line_length:
+                    line = f'{self.first_name} & Guest'
+                return line
+        else:
+            line = f'{self.first_name}, '
+            plus_one = self.party()[1]
+            line += 'Guest' if plus_one.unnamed() else plus_one.first_name
+            line += ' & Family'
+            if len(line) > max_line_length:
+                line = f'{self.first_name} & Family'
+            return line
+
     username = models.SlugField(blank=True, null=True)
     phone = PhoneNumberField(blank=True)
     email = models.EmailField(blank=True, max_length=200)
