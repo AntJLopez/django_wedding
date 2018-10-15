@@ -3,7 +3,11 @@
 
 {% block content %}
 <div class="small-12 large-8 large-centered columns wrapper rsvp-section">
-  {% if guest %}
+  {% if True %}
+    <p class="content-block">
+      The RSVP form will be up shortly. Please check back in a few days.
+    </p>
+  {% elif guest %}
     <form data-abide method="POST" class="rsvp-form custom" action="{% url 'rsvp' %}" id="rsvp_form">
       {% csrf_token %}
       <input type="hidden" id="guest_id" name="guest_id" value="{{ guest.id }}">

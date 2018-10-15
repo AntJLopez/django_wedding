@@ -261,6 +261,26 @@ div[id*="section-"] {
 	margin-left: 0.5em;
 }
 
+/*==== Accomodations ====*/
+
+.accomodations {
+  text-align: left;
+  .accomodations-block {
+    .accomodations-title {
+      color: $quarternary;
+      text-align: center;
+      font-weight: bold;
+      font-size: x-large;
+    }
+  }
+  .hotel-block-header {
+    text-align: center;
+    font-size: large;
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
+}
+
 /*==== Block Grid ====*/
 
 .block-grid {
@@ -672,8 +692,12 @@ label.error {
 /*-----------------------------------------------------------------------------------*/
 .slides {
   img {
-    max-height: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
     width: auto;
+    max-width: 50%;
   }
 }
 

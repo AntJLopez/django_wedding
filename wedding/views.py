@@ -16,20 +16,20 @@ def home(request, gift_form=GiftForm(), rsvp_form=RSVPForm()):
     sections.append({
         'title': 'The Proposal',
         'template': 'wedding/sections/proposal.html'})
-    sections.append({
-        'title': 'Wedding Party',
-        'template': 'wedding/sections/wedding_party.html'})
-    sections.append({
-        'title': 'Family',
-        'template': 'wedding/sections/family.html'})
+    # sections.append({
+    #     'title': 'Wedding Party',
+    #     'template': 'wedding/sections/wedding_party.html'})
+    # sections.append({
+    #     'title': 'Family',
+    #     'template': 'wedding/sections/family.html'})
     sections.append({
         'title': 'Schedule',
         'template': 'wedding/sections/schedule.html'})
     sections.append({
-        'title': 'Getting There',
-        'template': 'wedding/sections/directions.html'})
-    sections.append({
         'template': 'wedding/sections/map.html'})
+    # sections.append({
+    #     'title': 'Getting There',
+    #     'template': 'wedding/sections/directions.html'})
     sections.append({
         'title': 'Accommodations',
         'template': 'wedding/sections/accommodations.html'})

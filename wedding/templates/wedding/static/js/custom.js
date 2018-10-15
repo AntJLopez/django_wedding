@@ -36,8 +36,7 @@ $(document).ready(() => {
 
   function backStrech() {
     $('aside').backstretch([
-      '/static/img/placeholder-1.jpg',
-      '/static/img/placeholder-2.jpg',
+      '/static/img/peeking.jpg',
 
     ], { duration: 5000, fade: 1000 });
   }

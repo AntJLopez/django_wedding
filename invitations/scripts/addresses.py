@@ -6,6 +6,7 @@ from reportlab.graphics import shapes
 import itertools
 from pprint import pprint  # noqa
 
+
 states = [
     'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID',
     'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS',
@@ -82,6 +83,14 @@ def create_kw_csv(filename='invitations/scripts/labels/kuwait_guests.csv'):
             writer.writerow([str(guest)])
 
 
+def create_international_csv():
+    international = Guest.objects.leads().invited().exclude(
+        country='US').exclude(country='KW')
+    for guest in international:
+        print(guest)
+        print(guest.country)
+
+
 def complete_countries():
     for guest in Guest.objects.invited().leads():
         g = str(guest)
@@ -101,4 +110,4 @@ def complete_countries():
 
 def run():
     complete_countries()
-    create_kw_csv()
+    create_international_csv()
