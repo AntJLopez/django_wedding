@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Guest
 from .forms import GuestForm, RSVPForm
 from payments.models import Payer, PaymentCategory, Payment
+import json
 from pprint import pprint  # noqa
 
 stripe.api_key = STRIPE_SECRET_KEY
@@ -60,9 +61,15 @@ def guest_delete(request, pk, template_name='guests/delete.html'):
 
 @require_POST
 def onsite_cost(request):
-    nights = request.POST['nights']
-    party = request.POST['party']
-    num_guests = len(g for g in party if Guest.objects.get(g).age() < 5)
+    data = json.loads(next(iter(request.POST)))
+    nights = data['nights']
+    print(f'Nights: {nights}')
+    party = data['party']
+    print(f'Party: {party}')
+    # guests = [g for g in party]
+    guests = [g for g in party if Guest.objects.get(g).age() < 5]
+    num_guests = len(guests)
+    print(f'Number of Guests: {num_guests}')
     if nights == 2:
         return {'cost': 170 * num_guests}
     elif nights == 1:

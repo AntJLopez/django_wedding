@@ -196,14 +196,15 @@ $(document).ready(() => {
   let onsiteCost = 0;
 
   function updateOnsiteCost() {
+    const url = $('#onsite_cost_url').attr('data-onsite_cost_url');
     const postData = {
       nights: numNights,
       party: guestParty,
-      csrfmiddlewaretoken: csrftoken,
+      // csrfmiddlewaretoken: csrftoken,
     };
     $.post(
-      'https://tonyhaya.com/onsite_cost/',
-      postData,
+      url,
+      JSON.stringify(postData),
       (data) => {
         if (!($.isEmptyObject(data.cost))) {
           onsiteCost = data.cost;
@@ -268,7 +269,7 @@ $(document).ready(() => {
       guestParty = [];
       $('.party-checkbox').each((index, checkbox) => {
         if (checkbox.checked) {
-          guestParty.push(checkbox.value);
+          guestParty.push(parseInt(checkbox.value, 10));
         }
       });
       updateOnsiteCost();
