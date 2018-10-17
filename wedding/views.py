@@ -27,9 +27,9 @@ def home(request, gift_form=GiftForm(), rsvp_form=RSVPForm()):
         'template': 'wedding/sections/schedule.html'})
     sections.append({
         'template': 'wedding/sections/map.html'})
-    # sections.append({
-    #     'title': 'Getting There',
-    #     'template': 'wedding/sections/directions.html'})
+    sections.append({
+        'title': 'Getting There',
+        'template': 'wedding/sections/directions.html'})
     sections.append({
         'title': 'Accommodations',
         'template': 'wedding/sections/accommodations.html'})

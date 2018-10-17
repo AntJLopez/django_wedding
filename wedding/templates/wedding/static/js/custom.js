@@ -174,6 +174,27 @@ $(document).ready(() => {
   /*  RSVP Form
   /*-----------------------------------------------------------------------------------*/
 
+  let guestParty = [];
+  let numNights = 0;
+  let onsiteCost = 0;
+
+  function updateOnsiteCost() {
+    const postData = {
+      nights: numNights,
+      party: guestParty,
+    };
+    $.post(
+      'https://tonyhaya.com/onsite_cost/',
+      postData,
+      (data) => {
+        if (!($.isEmptyObject(data.cost))) {
+          onsiteCost = data.cost;
+          $('#lodging-cost').text = onsiteCost;
+        }
+      },
+    );
+  }
+
   function rsvpFormSubmit() {
     const formID = $('#rsvp_form');
     const url = formID.attr('action'); // eslint-disable-line
@@ -225,11 +246,26 @@ $(document).ready(() => {
     $('.accept').on('click', () => {
       $('.attending').fadeIn();
     });
-
+    $('.party-checkbox').change(() => {
+      $('.party-checkbox').each(() => {
+        console.log('Guest');
+        console.log($(this).class);
+        console.log($(this).hasClass('checked'));
+      });
+    });
     $('.onsite_0').on('click', () => {
+      numNights = 0;
+      updateOnsiteCost();
       $('.staying').fadeOut();
     });
-    $('.onsite_1, .onsite_2').on('click', () => {
+    $('.onsite_1').on('click', () => {
+      numNights = 1;
+      updateOnsiteCost();
+      $('.staying').fadeIn();
+    });
+    $('.onsite_2').on('click', () => {
+      numNights = 2;
+      updateOnsiteCost();
       $('.staying').fadeIn();
     });
   }

@@ -75,6 +75,19 @@ def test_rsvp_complete(request):
 
 
 @require_POST
+def onsite_cost(request):
+    nights = request.POST['nights']
+    party = request.POST['party']
+    num_guests = len(g for g in party if Guest.objects.get(g).age() < 5)
+    if nights == 2:
+        return {'cost': 170 * num_guests}
+    elif nights == 1:
+        return {'cost': 90 * num_guests}
+
+    return {}
+
+
+@require_POST
 def rsvp(request):
     response = {'errors': {}}
     form = RSVPForm(request.POST)

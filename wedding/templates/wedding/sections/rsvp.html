@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="small-12 large-8 large-centered columns wrapper rsvp-section">
-  {% if True %}
+  {% if False %}
     <p class="content-block">
       The RSVP form will be up shortly. Please check back in a few days.
     </p>
@@ -32,7 +32,7 @@
           <div class="checkbox-line-wrapper columns">
             <input
               type="checkbox"
-              class="checkbox-item"
+              class="checkbox-item party-checkbox"
               name="guests"
               value="{{ member.id }}"
               id="attendance_{{ member.id }}">
@@ -89,6 +89,10 @@
       </fieldset>
       <fieldset class="rsvp-pay staying">
         <legend>How would you like to pay?</legend>
+        <div class="columns">
+          The cost of staying onsite for your whole party is
+          $<span id=lodging-cost>25</span>.
+        </div>
         <div class="columns">
           <div class="fieldWrapper">
             <label for="rsvp-cc">

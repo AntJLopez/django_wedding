@@ -13,8 +13,6 @@ urlpatterns = [
     path('payments/', include('payments.urls')),
     path('logout/', views.guest_logout, name='guest_logout'),
     path('rsvp/', guest_views.rsvp, name='rsvp'),
-    path('test_rsvp/', guest_views.test_rsvp, name='test_rsvp'),
-    path('test_rsvp_complete/', guest_views.test_rsvp_complete,
-         name='test_rsvp_complete'),
+    path('onsite_cost/', guest_views.onsite_cost, name='onsite_cost'),
     path('<guest_username>/', views.guest_login, name='guest_login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
