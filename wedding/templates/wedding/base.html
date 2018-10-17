@@ -57,6 +57,7 @@
     var stripe = Stripe('{{ stripe_public_key }}');
     var elements = stripe.elements();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <script src="{% static 'js/custom.js' %}"></script>
   <script>
     $(document).foundation();

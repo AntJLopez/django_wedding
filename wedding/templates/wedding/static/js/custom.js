@@ -1,6 +1,23 @@
-/* global google, stripe, elements */
+/* global google, stripe, elements, Cookies */
 
 $(document).ready(() => {
+  /*-----------------------------------------------------------------------------------*/
+  /*  Prepare CSRF Token
+  /*-----------------------------------------------------------------------------------*/
+
+  const csrftoken = Cookies.get('csrftoken');
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+      }
+    },
+  });
+
   /*-----------------------------------------------------------------------------------*/
   /*  Smooth Scroll
   /*  Thanks to: https://github.com/davist11/jQuery-One-Page-Nav
@@ -182,6 +199,7 @@ $(document).ready(() => {
     const postData = {
       nights: numNights,
       party: guestParty,
+      csrfmiddlewaretoken: csrftoken,
     };
     $.post(
       'https://tonyhaya.com/onsite_cost/',
@@ -247,11 +265,13 @@ $(document).ready(() => {
       $('.attending').fadeIn();
     });
     $('.party-checkbox').change(() => {
-      $('.party-checkbox').each(() => {
-        console.log('Guest');
-        console.log($(this).class);
-        console.log($(this).hasClass('checked'));
+      guestParty = [];
+      $('.party-checkbox').each((index, checkbox) => {
+        if (checkbox.checked) {
+          guestParty.push(checkbox.value);
+        }
       });
+      updateOnsiteCost();
     });
     $('.onsite_0').on('click', () => {
       numNights = 0;

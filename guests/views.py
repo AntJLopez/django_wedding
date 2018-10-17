@@ -58,22 +58,6 @@ def guest_delete(request, pk, template_name='guests/delete.html'):
     return render(request, template_name, data)
 
 
-def test_rsvp(request):
-    if request.method == 'POST':
-        form = RSVPForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('test_rsvp_complete'))
-    else:
-        form = RSVPForm()
-
-    return render(request, 'wedding/test_rsvp.html', {'form': form})
-
-
-def test_rsvp_complete(request):
-    return render(request, 'wedding/test_rsvp_complete.html')
-
-
 @require_POST
 def onsite_cost(request):
     nights = request.POST['nights']
