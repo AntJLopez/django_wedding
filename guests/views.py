@@ -59,23 +59,27 @@ def guest_delete(request, pk, template_name='guests/delete.html'):
     return render(request, template_name, data)
 
 
+def lodging_cost(guest_list, nights):
+    try:
+        guest_list = [Guest.objects.get(pk=g) for g in guest_list]
+    except TypeError:
+        # The guest list was already guest objects, not IDs
+        pass
+    guests = [guest for guest in guest_list if guest.age() >= 5]
+    num_guests = len(guests)
+    if nights == 1:
+        return 90 * num_guests
+    elif nights == 2:
+        return 170 * num_guests
+    else:
+        return 0
+
+
 @require_POST
 def onsite_cost(request):
     data = json.loads(next(iter(request.POST)))
-    nights = data['nights']
-    print(f'Nights: {nights}')
-    party = data['party']
-    print(f'Party: {party}')
-    # guests = [g for g in party]
-    guests = [g for g in party if Guest.objects.get(g).age() < 5]
-    num_guests = len(guests)
-    print(f'Number of Guests: {num_guests}')
-    if nights == 2:
-        return {'cost': 170 * num_guests}
-    elif nights == 1:
-        return {'cost': 90 * num_guests}
-
-    return {}
+    cost = lodging_cost(data['party'], data['nights'])
+    return JsonResponse({'cost': cost})
 
 
 @require_POST
@@ -99,7 +103,7 @@ def rsvp(request):
         guest = Guest.objects.get(id=cd['guest_id'])
         if cd['attending'] and cd['nights_onsite'] > 0:
             # The guest(s) will be staying onsite, so we need payment
-            amount = len(cd['guests']) * (35 + 48 * cd['nights_onsite'])
+            amount = lodging_cost(cd['guests'], cd['nights_onsite'])
             try:
                 stripe_kwargs = {
                     'amount': int(amount * 100),  # Convert dollars to cents
@@ -120,7 +124,7 @@ def rsvp(request):
                 card_error = str(card_error)
                 if 'Request req' in card_error:
                     card_error = card_error.split(':', 1)[1].strip()
-                response['errors']['gift_cc'] = [card_error]
+                response['errors']['rsvp_cc'] = [card_error]
         if not response['errors']:
             form.save()
     else:

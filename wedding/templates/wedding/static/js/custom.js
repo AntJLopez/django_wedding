@@ -1,4 +1,4 @@
-/* global google, stripe, elements, Cookies */
+/* global google, stripe, elements, Cookies, location */
 
 $(document).ready(() => {
   /*-----------------------------------------------------------------------------------*/
@@ -206,13 +206,19 @@ $(document).ready(() => {
       url,
       JSON.stringify(postData),
       (data) => {
-        if (!($.isEmptyObject(data.cost))) {
+        if (data.cost != null) {
           onsiteCost = data.cost;
-          $('#lodging-cost').text = onsiteCost;
+        } else {
+          onsiteCost = 0;
         }
+        $('#lodging-cost').text(onsiteCost);
       },
     );
   }
+
+  $('#rsvp-success').on('close.fndtn.reveal', '[data-reveal]', () => {
+    location.reload();
+  });
 
   function rsvpFormSubmit() {
     const formID = $('#rsvp_form');

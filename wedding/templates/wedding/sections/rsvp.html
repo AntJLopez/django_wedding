@@ -3,11 +3,27 @@
 
 {% block content %}
 <div class="small-12 large-8 large-centered columns wrapper rsvp-section">
-  {% if False %}
+  {% if not guest %}
     <p class="content-block">
-      The RSVP form will be up shortly. Please check back in a few days.
+      Please use the unique code from your invitation to RSVP.
+      <br />
+      If you are confused,
+      <a href="mailto:info@tonyhaya.com?Subject=RSVP%20Question">
+        email us
+      </a>
+      and we'll help.
     </p>
-  {% elif guest %}
+  {% elif guest.rsvp %}
+    <p class="content-block">
+      It looks like you already sumbitted your RSVP!
+      <br />
+      If you are confused,
+      <a href="mailto:info@tonyhaya.com?Subject=RSVP%20Question">
+        email us
+      </a>
+      and we'll help.
+    </p>
+  {% else %}
     <form data-abide method="POST" class="rsvp-form custom" action="{% url 'rsvp' %}" id="rsvp_form">
       {% csrf_token %}
       <input type="hidden" id="guest_id" name="guest_id" value="{{ guest.id }}">
@@ -91,7 +107,7 @@
         <legend>How would you like to pay?</legend>
         <div class="columns">
           The cost of staying onsite for your whole party is
-          $<span id=lodging-cost>25</span>.
+          $<span id="lodging-cost">0</span>.
         </div>
         <div class="columns">
           <div class="fieldWrapper">
@@ -134,16 +150,6 @@
         <span class="btn-label">Send RSVP</span>
       </button>
     </form>
-  {% else %}
-  <p class="content-block">
-    Please use the unique code from your invitation to RSVP.
-    <br />
-    If you are confused,
-    <a href="mailto:info@tonyhaya.com?Subject=RSVP%20Question">
-      email us
-    </a>
-    and we'll help.
-  </p>
   {% endif %}
 </div>
 {% endblock %}
