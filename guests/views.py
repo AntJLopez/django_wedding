@@ -1,5 +1,4 @@
 from django.http import JsonResponse, HttpResponseRedirect  # noqa
-from django.urls import reverse
 from django.views.decorators.http import require_POST
 from wedding.local_settings import STRIPE_SECRET_KEY
 import stripe
@@ -65,7 +64,7 @@ def lodging_cost(guest_list, nights):
     except TypeError:
         # The guest list was already guest objects, not IDs
         pass
-    guests = [guest for guest in guest_list if guest.age() >= 5]
+    guests = [g for g in guest_list if g.age() is None or g.age() >= 5]
     num_guests = len(guests)
     if nights == 1:
         return 90 * num_guests

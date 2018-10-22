@@ -74,7 +74,7 @@ class Guest(models.Model):
             years = int(delta.days / 365.25)
             return years
         else:
-            return ''
+            return None
 
     def party(self):
         party = []

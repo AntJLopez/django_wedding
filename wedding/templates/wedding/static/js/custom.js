@@ -1,4 +1,4 @@
-/* global google, stripe, elements, Cookies, location */
+/* global google, stripe, elements, Cookies */
 
 $(document).ready(() => {
   /*-----------------------------------------------------------------------------------*/
@@ -216,10 +216,6 @@ $(document).ready(() => {
     );
   }
 
-  $('#rsvp-success').on('close.fndtn.reveal', '[data-reveal]', () => {
-    location.reload();
-  });
-
   function rsvpFormSubmit() {
     const formID = $('#rsvp_form');
     const url = formID.attr('action'); // eslint-disable-line
@@ -294,6 +290,10 @@ $(document).ready(() => {
       numNights = 2;
       updateOnsiteCost();
       $('.staying').fadeIn();
+    });
+
+    $('#rsvp-success').bind('closed', () => {
+      window.location.reload();
     });
   }
   rsvpFormSubmit();
