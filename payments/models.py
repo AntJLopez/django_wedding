@@ -51,6 +51,9 @@ class Payer(models.Model):
 
 
 class Payment(models.Model):
+    def __str__(self):
+        return f'{self.created:%Y-%m-%d} – ${self.amount} – {self.payer}'
+
     created = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     category = models.ForeignKey(

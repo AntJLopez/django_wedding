@@ -5,7 +5,7 @@ import stripe
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Guest
-from .forms import GuestForm, RSVPForm
+from .forms import GuestForm, WebRSVPForm
 from payments.models import Payer, PaymentCategory, Payment
 import json
 from pprint import pprint  # noqa
@@ -84,7 +84,7 @@ def onsite_cost(request):
 @require_POST
 def rsvp(request):
     response = {'errors': {}}
-    form = RSVPForm(request.POST)
+    form = WebRSVPForm(request.POST)
 
     if form.is_valid():
         cd = form.cleaned_data
@@ -100,6 +100,7 @@ def rsvp(request):
                 guest.save()
 
         guest = Guest.objects.get(id=cd['guest_id'])
+        payment = None
         if cd['attending'] and cd['nights_onsite'] > 0:
             # The guest(s) will be staying onsite, so we need payment
             amount = lodging_cost(cd['guests'], cd['nights_onsite'])
@@ -125,7 +126,10 @@ def rsvp(request):
                     card_error = card_error.split(':', 1)[1].strip()
                 response['errors']['rsvp_cc'] = [card_error]
         if not response['errors']:
-            form.save()
+            rsvp = form.save()
+            if payment:
+                rsvp.payment = payment
+                rsvp.save()
     else:
         # The form is invalid
         response['errors'] = form.errors

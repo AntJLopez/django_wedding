@@ -35,7 +35,7 @@ class RSVP(models.Model):
     attending_kuwait = models.BooleanField(default=False)
     nights_onsite = models.PositiveSmallIntegerField(blank=True, default=0)
     activities = models.ManyToManyField(Activity, related_name='groups')
-    payment = models.ForeignKey(
+    payment = models.OneToOneField(
         'payments.Payment', blank=True, null=True, on_delete=models.SET_NULL)
     message = models.TextField(blank=True, default='')
 
