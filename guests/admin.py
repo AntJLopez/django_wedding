@@ -1,11 +1,92 @@
 from django.contrib import admin
-from .models import Guest, Activity, RSVP
+from django.utils.translation import gettext_lazy as _
+from django_countries import countries
+from .models import Guest, Activity, RSVP, INVITED_THRESHOLD
 from .forms import RSVPForm  # noqa
+
+
+class InvitedFilter(admin.SimpleListFilter):
+    title = _('Invited Status')
+    parameter_name = 'invited'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', _('Invited')),
+            ('no', _('Not Invited')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            return queryset.filter(percentile__gte=INVITED_THRESHOLD)
+        if self.value() == 'no':
+            return queryset.filter(percentile__lt=INVITED_THRESHOLD)
+
+
+class PartyRoleFilter(admin.SimpleListFilter):
+    title = _('Party Role')
+    parameter_name = 'party_role'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('leader', _('Leader')),
+            ('partner', _('Partner')),
+            ('child', _('Child')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'leader':
+            return queryset.filter(lead_partner=None, parent=None)
+        if self.value() == 'partner':
+            return queryset.filter(lead_partner__isnull=False)
+        if self.value() == 'child':
+            return queryset.filter(parent__isnull=False)
+
+
+class CountryFilter(admin.SimpleListFilter):
+    title = _('Country')
+    parameter_name = 'country'
+
+    def lookups(self, request, model_admin):
+        country_dict = dict(countries)
+        g_countries = set(g.country for g in model_admin.model.objects.all())
+        return [(c, country_dict[c] if c else None) for c in g_countries]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(country=self.value())
+
+
+class AddressFilter(admin.SimpleListFilter):
+    title = _('Complete Address')
+    parameter_name = 'complete_address'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('yes', _('Complete')),
+            ('no', _('Incomplete')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            return queryset.exclude(thoroughfare="")
+        if self.value() == 'no':
+            return queryset.filter(thoroughfare="")
 
 
 @admin.register(Guest)
 class GuestAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'is_lead', 'invited', 'username',)
+    list_display = ('__str__', 'invited', 'username', 'is_lead', 'adult')
+    list_per_page = 1000
+    list_filter = (
+        InvitedFilter,
+        PartyRoleFilter,
+        CountryFilter,
+        AddressFilter, )
+    search_fields = [
+        'first_name', 'last_name',
+        'lead_partner__first_name', 'lead_partner__last_name',
+        'parent__first_name', 'parent__last_name',
+    ]
 
 
 @admin.register(RSVP)

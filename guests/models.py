@@ -6,6 +6,7 @@ from decimal import Decimal
 
 
 INVITED_THRESHOLD = Decimal('0.40')
+AGE_THRESHOLD = 5
 
 
 class Activity(models.Model):
@@ -75,6 +76,10 @@ class Guest(models.Model):
             return years
         else:
             return None
+
+    def adult(self):
+        return self.age() is None or self.age() >= AGE_THRESHOLD
+    adult.boolean = True
 
     def party(self):
         party = []
