@@ -97,7 +97,6 @@ def complete_countries():
         if not guest.country:
             kw = [' Al ', 'Zamanon', 'Ilene', 'Evita']
             if any(name in g for name in kw):
-                print(guest)
                 guest.country = 'KW'
                 guest.save()
             us = ['Harriman', 'Kwiecinski', 'Marotta', 'Mozill', 'Torta']

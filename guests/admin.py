@@ -47,12 +47,15 @@ class CountryFilter(admin.SimpleListFilter):
     parameter_name = 'country'
 
     def lookups(self, request, model_admin):
-        country_dict = dict(countries)
+        c_dict = dict(countries)
         g_countries = set(g.country for g in model_admin.model.objects.all())
-        return [(c, country_dict[c] if c else None) for c in g_countries]
+        country_list = [(c, c_dict[c]) for c in g_countries if c in c_dict]
+        return [('none', _('No Country'))] + country_list
 
     def queryset(self, request, queryset):
         if self.value():
+            if self.value() == 'none':
+                return queryset.filter(country="")
             return queryset.filter(country=self.value())
 
 
