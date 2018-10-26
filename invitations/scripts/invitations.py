@@ -1,6 +1,7 @@
 from guests.models import Guest  # noqa
 import random
 import itertools  # noqa
+import csv
 from pprint import pprint  # noqa
 from bs4 import BeautifulSoup
 from num2words import num2words as num2word
@@ -81,7 +82,8 @@ def test():
     invite2.write('invitations/images/invite2.svg')
 
 
-def invitations(max=None):
+def invitations(
+        max=None, filename='invitations/images/invitation_information.csv'):
     MAX_LINE_LENGTH = 28
 
     invited_leads = Guest.objects.leads().invited().order_by(
@@ -89,7 +91,11 @@ def invitations(max=None):
     if max:
         invited_leads = itertools.islice(invited_leads, max)
 
-    for guest in invited_leads:
+    csvfile = open(filename, 'w', newline='', encoding='utf-8')
+    writer = csv.writer(csvfile, delimiter=',')
+    writer.writerow(['Recipient', 'ID', 'Invite Number'])
+    for invite_number, guest in enumerate(invited_leads):
+        writer.writerow([str(guest), guest.id, f'{invite_number + 1:03}'])
         invite = Invitation()
         party = len(guest.party())
         invite.number = guest.id
@@ -130,6 +136,7 @@ def invitations(max=None):
             invite.invitees = line
 
         yield str(invite)
+    csvfile.close()
 
 
 def chunks(iterable, size=10):
