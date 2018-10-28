@@ -229,7 +229,7 @@ def generate_invitation_singles():
         with open(f'{filename}.svg', 'w', newline='\n', encoding='utf-8') as f:
             f.write(invite)
         svg_to_pdf(filename)
-        pdf_to_dxf(filename)
+        pdf_to_dxf(filename, clean_up=False)
 
 
 def run():
