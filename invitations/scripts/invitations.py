@@ -83,11 +83,14 @@ def test():
 
 
 def invitations(
-        max=None, filename='invitations/images/invitation_information.csv'):
+        filename='invitations/images/invitation_information.csv',
+        max=None, return_all=False):
     MAX_LINE_LENGTH = 28
 
     invited_leads = Guest.objects.leads().invited().order_by(
         'family', 'percentile')
+    if not return_all:
+        invited_leads = invited_leads.filter(invite_printed=False)
     if max:
         invited_leads = itertools.islice(invited_leads, max)
 
@@ -163,8 +166,8 @@ def pdf_to_dxf(filename, clean_up=True):
         'dxf:-mm',
         f'{filename}.pdf',
         f'{filename}.dxf'])
-    # if clean_up:
-    #     os.remove(f'{filename}.pdf')
+    if clean_up:
+        os.remove(f'{filename}.pdf')
 
 
 def pdf_to_ai(filename, clean_up=True):
@@ -216,11 +219,20 @@ def generate_invitation_sheets(group_size=4, vertical=False):
 
         filename = f'invitations/images/invite_sheet_{c + 1:03}'
         sheet.save(f'{filename}.svg')
+        svg_to_pdf(filename, clean_up=False)
+        pdf_to_dxf(filename, clean_up=False)
+
+
+def generate_invitation_singles():
+    for c, invite in enumerate(invitations()):
+        filename = f'invitations/images/invitation_{c + 1:03}'
+        with open(f'{filename}.svg', 'w', newline='\n', encoding='utf-8') as f:
+            f.write(invite)
         svg_to_pdf(filename)
         pdf_to_dxf(filename)
 
 
 def run():
-    generate_invitation_sheets(group_size=1, vertical=True)
+    generate_invitation_singles()
     # svg_to_pdf('invitations/images/cut_template_sheet')
     # pdf_to_dxf('invitations/images/cut_template_sheet')

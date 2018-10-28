@@ -50,12 +50,19 @@ class CountryFilter(admin.SimpleListFilter):
         c_dict = dict(countries)
         g_countries = set(g.country for g in model_admin.model.objects.all())
         country_list = [(c, c_dict[c]) for c in g_countries if c in c_dict]
-        return [('none', _('No Country'))] + country_list
+        special_filters = [
+            ('none', _('No Country')),
+            ('no_us_kw', _('Not US or Kuwait')),
+        ]
+        return special_filters + country_list
 
     def queryset(self, request, queryset):
         if self.value():
             if self.value() == 'none':
                 return queryset.filter(country="")
+            if self.value() == 'no_us_kw':
+                return queryset.exclude(
+                    country='US').exclude(country='KW')
             return queryset.filter(country=self.value())
 
 
@@ -82,10 +89,12 @@ class GuestAdmin(admin.ModelAdmin):
     list_per_page = 1000
     list_filter = (
         InvitedFilter,
+        'invite_printed',
         PartyRoleFilter,
         CountryFilter,
         AddressFilter, )
     search_fields = [
+        'username',
         'first_name', 'last_name',
         'lead_partner__first_name', 'lead_partner__last_name',
         'parent__first_name', 'parent__last_name',
@@ -95,7 +104,7 @@ class GuestAdmin(admin.ModelAdmin):
 @admin.register(RSVP)
 class RSVPAdmin(admin.ModelAdmin):
     form = RSVPForm
-    list_display = ('__str__', 'attending', 'nights_onsite',)
+    list_display = ('__str__', 'attending', 'party_size', 'nights_onsite',)
 
 
 @admin.register(Activity)

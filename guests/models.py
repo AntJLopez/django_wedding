@@ -30,6 +30,9 @@ class RSVP(models.Model):
         ampm = 'pm' if d.hour >= 12 else 'am'
         return f'{d:%b} {d.day}, {d.hour}:{d:%M} {ampm}'
 
+    def party_size(self):
+        return len(self.guests.all())
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     attending = models.BooleanField()
@@ -194,6 +197,7 @@ class Guest(models.Model):
         ))
     first_name = models.CharField(blank=True, max_length=40)
     last_name = models.CharField(blank=True, max_length=40)
+    invite_printed = models.BooleanField(default=False)
     kuwait_invite = models.BooleanField(default=False)
     country = CountryField(blank=True)
     administrative_area = models.CharField(

@@ -12,6 +12,7 @@ db.json
 /node_modules
 original_template/
 /invitations/images
+/invitations/records
 /invitations/scripts/labels
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
