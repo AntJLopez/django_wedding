@@ -83,14 +83,38 @@ class AddressFilter(admin.SimpleListFilter):
             return queryset.filter(thoroughfare="")
 
 
+class RSVPFilter(admin.SimpleListFilter):
+    title = _('RSVP Status')
+    parameter_name = 'rsvp'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('accepted', _('Accepted')),
+            ('declined', _('Declined')),
+            ('no_reply', _('No Reply')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'no_reply':
+            return queryset.filter(rsvp__isnull=True)
+
+        # We're not looking for blank RSVPs, so can filter them out
+        queryset = queryset.filter(rsvp__isnull=False)
+        if self.value() == 'accepted':
+            return queryset.filter(rsvp__attending=True)
+        if self.value() == 'declined':
+            return queryset.filter(rsvp__attending=False)
+
+
 @admin.register(Guest)
 class GuestAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'invited', 'username', 'is_lead', 'adult')
     list_per_page = 1000
     list_filter = (
         InvitedFilter,
-        'invite_printed',
         PartyRoleFilter,
+        RSVPFilter,
+        'invite_printed',
         CountryFilter,
         AddressFilter, )
     search_fields = [
