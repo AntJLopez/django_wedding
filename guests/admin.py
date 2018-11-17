@@ -52,6 +52,7 @@ class CountryFilter(admin.SimpleListFilter):
         country_list = [(c, c_dict[c]) for c in g_countries if c in c_dict]
         special_filters = [
             ('none', _('No Country')),
+            ('no_kw', _('Not Kuwait')),
             ('no_us_kw', _('Not US or Kuwait')),
         ]
         return special_filters + country_list
@@ -63,6 +64,8 @@ class CountryFilter(admin.SimpleListFilter):
             if self.value() == 'no_us_kw':
                 return queryset.exclude(
                     country='US').exclude(country='KW')
+            if self.value() == 'no_kw':
+                return queryset.exclude(country='KW')
             return queryset.filter(country=self.value())
 
 
@@ -108,13 +111,12 @@ class RSVPFilter(admin.SimpleListFilter):
 
 @admin.register(Guest)
 class GuestAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'invited', 'username', 'is_lead', 'adult')
+    list_display = ('__str__', 'invited', 'username', 'is_lead', )
     list_per_page = 1000
     list_filter = (
         InvitedFilter,
         PartyRoleFilter,
         RSVPFilter,
-        'invite_printed',
         CountryFilter,
         AddressFilter, )
     search_fields = [
