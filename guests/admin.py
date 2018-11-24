@@ -115,6 +115,7 @@ class OnsiteFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return (
+            ('gt0', _('Friday or Saturday')),
             ('2', _('Friday & Saturday')),
             ('1', _('Saturday')),
             ('0', _('Offsite')),
@@ -122,6 +123,8 @@ class OnsiteFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         queryset = queryset.filter(rsvp__isnull=False)
+        if self.value() == 'gt0':
+            return queryset.filter(rsvp__nights_onsite__gt=0)
         if self.value() == '2':
             return queryset.filter(rsvp__nights_onsite=2)
         if self.value() == '1':
@@ -138,6 +141,7 @@ class GuestAdmin(admin.ModelAdmin):
         InvitedFilter,
         PartyRoleFilter,
         RSVPFilter,
+        # ('rsvp__nights_onsite', admin.FieldListFilter),
         OnsiteFilter,
         CountryFilter,
         AddressFilter, )
