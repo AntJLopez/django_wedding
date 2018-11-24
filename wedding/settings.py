@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'sass_processor',
     'mathfilters',
+    'sorl.thumbnail',
 
     # Django Apps
     'django.contrib.admin',
@@ -54,6 +55,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'staticthumb': 'wedding.templatetags.staticthumb',
+            },
         },
     },
 ]

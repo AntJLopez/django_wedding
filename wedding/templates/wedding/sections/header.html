@@ -1,5 +1,5 @@
 {% extends 'wedding/sections/section.html' %}
-{% load staticfiles %}
+{% load thumbnail staticthumb %}
 
 {% block content %}
 <header>
@@ -14,7 +14,18 @@
     Are getting married!
   {% endif %}
 </p>
-<img alt="Placeholder" class="hero-unit fade-in" src="{% static 'img/engagement.jpg' %}">
+
+{% with 'img/engagement.jpg'|static_url as path %}
+  <img src="{% thumbnail path '1920' as im %}{{ im.url }}{% endthumbnail %}"
+      srcset="
+          {% thumbnail path '640' as im %}  {{ im.url }} {{ im.x }}w{% endthumbnail %},
+          {% thumbnail path '1024' as im %} {{ im.url }} {{ im.x }}w{% endthumbnail %},
+          {% thumbnail path '1920' as im %} {{ im.url }} {{ im.x }}w{% endthumbnail %}"
+      alt="Engagement Photo"
+      class="hero-unit fade-in"
+      sizes="100vw"
+  />
+{% endwith %}
 
 <div class="row divider date-section">
   <div class="large-6 small-12 columns">
@@ -25,8 +36,8 @@
   <div class="large-6 small-12 columns">
     <div class="date-container col-2">
       <span class="day-time">Three O’Clock in the Afternoon</span>
-      <span class="day-location accent">Berkshire Outdoor Center</span>
-      <span class="day-address">591 Hamilton Rd Becket, MA</span>
+      <span class="day-location accent">Chimney Corners Camp YMCA</span>
+      <span class="day-address">Becket, MA 01223</span>
       <span class="day-meta">dinner & revelries to follow</span>
     </div>
   </div>
