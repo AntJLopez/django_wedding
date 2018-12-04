@@ -135,7 +135,7 @@ class OnsiteFilter(admin.SimpleListFilter):
 
 @admin.register(Guest)
 class GuestAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'invited', 'username', 'is_lead', )
+    list_display = ('__str__', 'username', 'email', )
     list_per_page = 1000
     list_filter = (
         InvitedFilter,
@@ -147,6 +147,7 @@ class GuestAdmin(admin.ModelAdmin):
         AddressFilter, )
     search_fields = [
         'username',
+        'email',
         'first_name', 'last_name',
         'lead_partner__first_name', 'lead_partner__last_name',
         'parent__first_name', 'parent__last_name',
