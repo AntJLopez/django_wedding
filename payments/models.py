@@ -60,3 +60,5 @@ class Payment(models.Model):
         PaymentCategory, null=True, on_delete=models.SET_NULL)
     payer = models.ForeignKey(Payer, on_delete=models.CASCADE)
     stripe_id = models.CharField(blank=True, max_length=255)
+    check_number = models.IntegerField(blank=True, null=True)
+    notes = models.TextField(blank=True)
